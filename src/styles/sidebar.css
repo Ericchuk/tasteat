@@ -1,0 +1,14 @@
+.nav {
+  width: 108px;
+}
+.nav ul li:first-child {
+  margin-top: 20px;
+}
+.nav ul li:first-child .home {
+  background-color: #EA736D;
+  filter: drop-shadow(0 8px 24px rgba(234, 124, 105, 0.6862745098));
+}
+.nav ul li {
+  border-radius: 12px 0 0 12px;
+  transition: transform all cubic-bezier(0.39, 0.575, 0.565, 1);
+}

@@ -1,0 +1,7 @@
+.menuNav li:first-child {
+  margin-left: 0;
+  padding-left: 0;
+}
+.menuNav li:first-child span {
+  left: 0;
+}
