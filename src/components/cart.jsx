@@ -1,13 +1,10 @@
 import cart from "../assets/sidebar icons/cart.svg";
 import CartContent from "./cartContent/content";
-import { useState } from "react";
+import { useContext } from "react";
+import {AppContext} from '../context'
 
 export default function Cart() {
-  const [openCart, setOpenCart] = useState(false);
-
-  function closeCart(){
-    setOpenCart(!openCart)
-  }
+  const {openCart, closeCart} = useContext(AppContext)
 
   return (
     <>

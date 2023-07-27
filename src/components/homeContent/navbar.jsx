@@ -1,4 +1,6 @@
 import '../../styles/menuNavbar.css';
+import { useContext } from "react";
+import {AppContext} from '../../context'
 
 export default function MenuNavbar(){
 
@@ -29,6 +31,8 @@ export default function MenuNavbar(){
         },
     ]
 
+    const {openCart} = useContext(AppContext)
+
     const navItem = navItems.map((item) => {
         return(
             <li key={item.id} className={`list-none p-2 ml-5 items-start relative cursor-pointer text-white capitalize ${item.itemName === 'Hot dishes' ? 'text-bg-icons' : ''}`}>
@@ -39,7 +43,7 @@ export default function MenuNavbar(){
     })
 
     return(
-        <nav className="menuNav mt-5 flex justify-start items-center w-8/12 border border-line border-t-0 border-l-0 border-r-0 relative">
+        <nav className={`menuNav mt-5 flex justify-start items-center border border-line border-t-0 border-l-0 border-r-0 relative ${openCart ? 'w-12/12' : "w-8/12"}`}>
             {navItem}
         </nav>
     )
