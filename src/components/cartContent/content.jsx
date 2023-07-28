@@ -1,8 +1,16 @@
+import { useContext } from 'react';
+import {AppContext} from '../../context';
 import Order from './orders';
 import CartFooter from './cartFooter'
+import CartFooterButton from './cartFooterButton';
+import ConfirmationPage from './payment/confirmation'
+import PaymentPage from './payment/paymentPage';
+import LocationPage from './location/locationPage'
 import '../../styles/cart.css'
 
 export default function CartContent() {
+
+  const {closeCart, orderItems, } = useContext(AppContext)
   return (
     <section className=" div relative w-6/12 p-6 bg-sidebar text-white">
       <h2 className="text-white text-lg mb-5 font-semibold">Orders #34562</h2>
@@ -17,6 +25,10 @@ export default function CartContent() {
       </div>
       <Order />
       <CartFooter />
+      <CartFooterButton button1="Go back" button2="Continue to Payment" onClick1={closeCart} disbable2={orderItems.length === 0} />
+      <ConfirmationPage />
+      <PaymentPage />
+      <LocationPage />
     </section>
   );
 }
