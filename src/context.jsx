@@ -77,6 +77,29 @@ const AppProvider = ({ children }) => {
 
   const [openCart, setOpenCart] = useState(false);
   const [orderItems, setOrderItems] = useState([]);
+  const [notificationOrder, setOrderInNotification] = useState([
+    {
+      id:0,
+      customer:"Orders #34562",
+      menu:'spicy seasoned seafood noodles',
+      totalPayment:20.58,
+      status:false,
+    },
+    {
+      id:1,
+      customer:"Orders #33212",
+      menu:'spicy seasoned seafood noodles',
+      totalPayment:12.58,
+      status:true,
+    },
+    {
+      id:2,
+      customer:"Orders #32155",
+      menu:'spicy seasoned seafood noodles',
+      totalPayment:10.58,
+      status:true,
+    },
+  ])
 
 
 
@@ -103,7 +126,8 @@ const AppProvider = ({ children }) => {
         orderItems,
         setOrderItems,
         addToCart,
-        removeFromCart
+        removeFromCart,
+        notificationOrder
       }}
     >
       {children}

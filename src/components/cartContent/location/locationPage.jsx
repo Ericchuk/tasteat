@@ -10,7 +10,7 @@ export default function LocationPage(){
             <LocationMethod />
             <aside className="flex justify-center items-center">
                 <hr className="h-0.5 w-6/12  border border-line" />
-                <small className="mx-3">or</small>
+                <small className="mx-3 text-line">or</small>
                 <hr  className="h-px w-6/12  border border-line"/>
             </aside>
             <LocationManual />
