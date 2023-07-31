@@ -31,7 +31,7 @@ export default function MenuNavbar(){
         },
     ]
 
-    const {openCart} = useContext(AppContext)
+    const {openCart, removeCart} = useContext(AppContext)
 
     const navItem = navItems.map((item) => {
         return(
@@ -43,7 +43,7 @@ export default function MenuNavbar(){
     })
 
     return(
-        <nav className={`menuNav mt-5 flex justify-start items-center border border-line border-t-0 border-l-0 border-r-0 relative ${openCart ? 'w-12/12' : "w-8/12"}`}>
+        <nav className={`menuNav mt-5 flex justify-start items-center border border-line border-t-0 border-l-0 border-r-0 relative ${openCart ? 'w-12/12' : "w-8/12"} ${removeCart ? 'w-full px-5' : "w-8/12"}`}>
             {navItem}
         </nav>
     )

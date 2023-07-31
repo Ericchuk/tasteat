@@ -6,3 +6,15 @@
     box-sizing: border-box;
     font-family: 'Barlow', sans-serif;
   }
+svg{
+  transform:rotate(-90deg)
+}
+  .circle1{
+    stroke-dasharray:660;
+  }
+  .circle2{
+    stroke-dasharray:340;
+  }
+  .circle3{
+    stroke-dasharray:410;
+  }

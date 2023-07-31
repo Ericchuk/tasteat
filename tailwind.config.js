@@ -12,7 +12,7 @@ export default {
         'bg-color': '#252836',
         'input-bg': '#2D303E',
         'line': '#393C49',
-        'lighter-text': '#E0E6E9',
+        'lighter-text': '#b8c0c4',
         
       },
       height: {

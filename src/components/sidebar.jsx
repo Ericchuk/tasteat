@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { AppContext } from '../context'
 import {NavLink} from 'react-router-dom'
 
 import Logo from './logo';
@@ -13,16 +14,14 @@ import setting from '../assets/sidebar icons/setting.svg'
 import logOut from '../assets/sidebar icons/log out.svg'
 
 export default function Sidebar(){
-    
-    const [sidebarIcons, setSidebarIcons] = useState('/home')
+     const {sidebarIcons,setSidebarIcons,change} = useContext(AppContext);
 
     useEffect(() => {
         setSidebarIcons(location.pathname)
     },[sidebarIcons])
 
-    function change(){
-        setSidebarIcons(location.pathname)
-    }
+   
+    
 
     const navItems = [
         {
@@ -69,7 +68,7 @@ export default function Sidebar(){
 
     const navItem = navItems.map((item) => {
         return(
-            <li key={item.id} className={`w-icons h-icons flex justify-center items-center ml-3 ${sidebarIcons === item.itemName ? 'bg-bg-color transition-colors': " "}`} onClick={change}>
+            <li key={item.id} className={`w-icons h-icons flex justify-center items-center ml-3 ${sidebarIcons === item.itemName ? 'bg-bg-color transition-colors': " "}`} onClick={()=> change(item)}>
                 <NavLink to={item.itemName} className={`home h-icon w-icon rounded-lg flex flex-col justify-center items-center ${location.pathname === item.itemName ? 'rounded-lg bg-bg-icons transition-opacity drop-shadow-3xl' : " "} `} style={({ isActive }) =>
             isActive ? { backgroundColor: "rgb(234 115 109)", } : { backgroundColor: "transparent" }
           }>

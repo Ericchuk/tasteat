@@ -14,7 +14,7 @@ export default function Dishes(){
                             <img src={item.dishImage} alt={item.dishName} className='rounded-circle absolute -top-10'/>
                             <p className='text-center w-36 my-3'>{item.dishName}</p>
                             <p className='text-[#ABBBC2] text-sm'>${item.price}</p>
-                            <p className="text-[#ABBBC2] text-sm">{item.availability}</p>
+                            <p className="text-[#ABBBC2] text-sm">{item.availability} available</p>
                             <button className='bg-bg-icons p-3.5 text-white text-sm rounded-lg w-10/12 mt-3' onClick={()=> addToCart(item)}>Order now</button>
                         </aside>
                     )

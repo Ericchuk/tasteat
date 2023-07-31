@@ -13,7 +13,7 @@ export default function CartFooterButton({button1,onClick1, button2, disable2}) 
         {button1}
       </button>
       <button
-        className="h-12 w-44 border border-bg-icons p-3.5 flex justify-center items-center bg-bg-icons rounded-lg font-semibold text-sm"
+        className="h-12 w-44 border border-bg-icons p-3.5 flex justify-center items-center bg-bg-icons rounded-lg font-semibold text-sm text-white"
         disabled={disable2}
       >
        {button2}

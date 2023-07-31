@@ -9,7 +9,7 @@ export default function NotificationPage() {
       <Header headText="Notification" />
       <hr className="mt-3 border border-line h-px" />
       <aside className="bg-sidebar mt-5 py-5 rounded-lg h-screen">
-        <NotificationHead />
+        <NotificationHead headText="Your order" option1="Filter Order" option2="Preparing" option3="Completed" />
         <NotificationStatHeader />
         <OrdersInNotification />
       </aside>
