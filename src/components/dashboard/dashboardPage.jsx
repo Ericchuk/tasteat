@@ -51,7 +51,7 @@ export default function DashboardPage() {
       </aside>
 
       <aside className="bg-sidebar rounded-lg mt-3 py-6">
-        <NotificationHead />
+        <NotificationHead headText="Order report " option1="Filter options" option2="Preparing" option3="sent out" />
         <NotificationStats />
         <OrderInNotification />
       </aside>
@@ -64,22 +64,13 @@ export default function DashboardPage() {
         <div className="w-12/12 px-5">
           <hr className="h-px w-full border border-line" />
         </div>
-        
+         
         <MostOrderedContent
           dish="spicy seasoned seafood noodles"
           dishImage={noodles}
           orders="200 dishes ordered"
         />
-        <MostOrderedContent
-          dish="Salted pasta with mushroom sauce"
-          dishImage={pasta}
-          orders="120 dishes ordered"
-        />
-        <MostOrderedContent
-          dish="Beef dumpling in hot and sour soup"
-          dishImage={noodles}
-          orders="50 dishes ordered"
-        />
+
         <div className="w-12/12 px-5">
           <button className="capitalize border-[#EA736D]  border-2 text-[#EA736D] text-sm w-full rounded-lg h-5 font-semibold py-5 flex justify-center items-center mt-5">
             View all

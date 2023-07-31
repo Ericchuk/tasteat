@@ -3,6 +3,7 @@ import noodles from "./assets/landing page image/image 4 (3).png";
 import pasta from "./assets/landing page image/image 4.png";
 import dumpling from "./assets/landing page image/image 4 (1).png";
 import spinach from "./assets/landing page image/image 4 (2).png";
+import ugwu from "./assets/landing page image/Images.png";
 import instantNoodles from "./assets/landing page image/image 4(1).png";
 import eren from "./assets/landing page image/Avatar 1.svg";
 import reiner from "./assets/landing page image/Avatar 1(1).svg";
@@ -23,6 +24,7 @@ const AppProvider = ({ children }) => {
       price: 2.29,
       availability: "20 Bowls",
       orderQty: 1,
+      discount:'20% off'
     },
     {
       id: 1,
@@ -31,6 +33,7 @@ const AppProvider = ({ children }) => {
       price: 2.69,
       availability: "11 Bowls",
       orderQty: 1,
+      discount:'50% off'
     },
     {
       id: 2,
@@ -39,11 +42,12 @@ const AppProvider = ({ children }) => {
       price: 2.99,
       availability: "16 Bowls ",
       orderQty: 1,
+      discount:'70% off'
     },
     {
       id: 3,
-      dishImage: dumpling,
-      dishName: "Beef dumpling in hot and sour soup",
+      dishImage: ugwu,
+      dishName: "Vegs spiced noodles submersed",
       price: 2.99,
       availability: "16 Bowls ",
       orderQty: 1,
@@ -92,9 +96,9 @@ const AppProvider = ({ children }) => {
       customerImage: eren,
       menu: "spicy seasoned seafood noodles",
       totalPayment: 20.58,
-      totalPurchasePaid:"125",
+      totalPurchasePaid: "125",
       status: true,
-      out:"true"
+      out: "true",
     },
     {
       id: 1,
@@ -103,9 +107,9 @@ const AppProvider = ({ children }) => {
       customerImage: reiner,
       menu: "Salted pasta with mushroom sauce",
       totalPayment: 12.58,
-      totalPurchasePaid:"145",
+      totalPurchasePaid: "145",
       status: false,
-      out:"false"
+      out: "false",
     },
     {
       id: 2,
@@ -114,9 +118,9 @@ const AppProvider = ({ children }) => {
       customerImage: levi,
       menu: "Beef dumpling in hot and sour soup",
       totalPayment: 10.58,
-      totalPurchasePaid:"105",
+      totalPurchasePaid: "105",
       status: true,
-      out:"false"
+      out: "false",
     },
     {
       id: 3,
@@ -125,9 +129,9 @@ const AppProvider = ({ children }) => {
       customerImage: historia,
       menu: "Hot spicy frieed rice with omelet",
       totalPayment: 20.58,
-      totalPurchasePaid:"45",
+      totalPurchasePaid: "45",
       status: true,
-      out:"true"
+      out: "true",
     },
     {
       id: 4,
@@ -136,9 +140,9 @@ const AppProvider = ({ children }) => {
       customerImage: reiner,
       menu: "Hot spicy frieed rice with omelet",
       totalPayment: 12.58,
-      totalPurchasePaid:"245",
+      totalPurchasePaid: "245",
       status: true,
-      out:"true"
+      out: "true",
     },
     {
       id: 5,
@@ -147,51 +151,78 @@ const AppProvider = ({ children }) => {
       customerImage: levi,
       menu: "Hot spicy frieed rice with omelet",
       totalPayment: 10.58,
-      totalPurchasePaid:"435",
+      totalPurchasePaid: "435",
       status: true,
-      out:"true"
+      out: "true",
     },
   ]);
-  
+
   const [datas, setDatas] = useState([
     {
-        id:0,
-        indicate:"Pending",
-        color:"#9290FE",
-        amount:200,
-        desc:"orders"
+      id: 0,
+      indicate: "Pending",
+      color: "#9290FE",
+      amount: 200,
+      desc: "orders",
     },
     {
-        id:1,
-        indicate:"Preparing",
-        color:"#FFB572",
-        amount:122,
-        desc:"customers"
+      id: 1,
+      indicate: "Preparing",
+      color: "#FFB572",
+      amount: 122,
+      desc: "customers",
     },
     {
-        id:2,
-        indicate:"Delivered",
-        color:"#50D1AA",
-        amount:264,
-        desc:"dishes"
+      id: 2,
+      indicate: "Delivered",
+      color: "#50D1AA",
+      amount: 264,
+      desc: "dishes",
     },
-])
+  ]);
 
-const data = datas.map((item) => {
-  const {color,id,indicate,amount,desc} = item;
-  return(
+  const [mostOrderedFood, setMostOrderedFood] = useState([
+    {
+      id: 0,
+      dish: "spicy seasoned seafood noodles",
+      dishImage:noodles,
+      orders: "200 dishes ordered",
+    },
+    {
+      id: 1,
+      dish: "Salted pasta with mushroom sauce",
+      dishImage:  pasta ,
+      orders: "120 dishes ordered",
+    },
+    {
+      id: 2,
+      dish: "Beef dumpling in hot and sour soup",
+      dishImage:  noodles ,
+      orders: "50 dishes ordered",
+    },
+  ]);
+  const [proceed, setProceed] = useState(false);
+
+  const data = datas.map((item) => {
+    const { color, id, indicate, amount, desc } = item;
+    return (
       <div key={id} className="flex justify-start items-start mt-5">
-          <span className={`bg-[${color}] h-[18px] w-[18px] rounded-circle mr-3 mt-1`}></span>
-          <aside>
-              <h4 className="text-[16px]">{indicate}</h4>
-              <p className="text-lighter-text text-sm">{amount} {desc}</p>
-          </aside>
+        <span
+          className={`bg-[${color}] h-[18px] w-[18px] rounded-circle mr-3 mt-1`}
+        ></span>
+        <aside>
+          <h4 className="text-[16px]">{indicate}</h4>
+          <p className="text-lighter-text text-sm">
+            {amount} {desc}
+          </p>
+        </aside>
       </div>
-  )})
+    );
+  });
 
   useLayoutEffect(() => {
     {
-      location.pathname === "/dashboard" || location.pathname === "/setting"
+      location.pathname === "/dashboard" || location.pathname === "/setting" || location.pathname === "/order"
         ? setRemoveCart(true)
         : setRemoveCart(false);
     }
@@ -212,7 +243,7 @@ const data = datas.map((item) => {
   function change(item) {
     setSidebarIcons(location.pathname);
     {
-      item.itemName === "/dashboard" || item.itemName === "/setting"
+      item.itemName === "/dashboard" || item.itemName === "/setting" || location.pathname === "/order"
         ? setRemoveCart(true)
         : setRemoveCart(false);
     }
@@ -235,7 +266,10 @@ const data = datas.map((item) => {
         sidebarIcons,
         setSidebarIcons,
         data,
-        datas
+        datas,
+        mostOrderedFood,
+        proceed,
+        setProceed
       }}
     >
       {children}

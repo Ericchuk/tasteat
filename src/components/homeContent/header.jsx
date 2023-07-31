@@ -10,9 +10,9 @@ const currentDate = today.toLocaleString('en-US', options);
 const {removeCart} = useContext(AppContext);
 
     return(
-        <header className='flex justify-between item-start text-white'>
+        <header className='flex justify-between item-center text-white'>
             <div>
-            <h1 className='font-universal text-heading font-semibold'>{headText}</h1>
+            <h1 className='font-universal capitalize text-heading font-semibold'>{headText}</h1>
             <p className='font-normal text-lighter-text'>{currentDate}</p>
             </div>
            {removeCart ? "" : <label htmlFor="searchbar" className="flex relative justify-center items-center">

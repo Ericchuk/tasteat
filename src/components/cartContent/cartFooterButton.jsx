@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { AppContext } from "../../context";
 
-export default function CartFooterButton({button1,onClick1, button2, disable2}) {
+export default function CartFooterButton({button1,onClick1, button2, disable2, onClick2}) {
   const { closeCart, orderItems } = useContext(AppContext);
 
   return (
@@ -15,6 +15,7 @@ export default function CartFooterButton({button1,onClick1, button2, disable2}) 
       <button
         className="h-12 w-44 border border-bg-icons p-3.5 flex justify-center items-center bg-bg-icons rounded-lg font-semibold text-sm text-white"
         disabled={disable2}
+        onClick={onClick2}
       >
        {button2}
       </button>

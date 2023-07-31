@@ -35,9 +35,9 @@ export default function MenuNavbar(){
 
     const navItem = navItems.map((item) => {
         return(
-            <li key={item.id} className={`list-none p-2 ml-5 items-start relative cursor-pointer text-white capitalize ${item.itemName === 'Hot dishes' ? 'text-bg-icons' : ''}`}>
+            <li key={item.id} className={`list-none p-2 ml-5 items-start relative cursor-pointer text-white capitalize`}>
                 <span className={` w-10 h-0 absolute bottom-0 left-2 ${item.itemName === 'Hot dishes' ? 'border border-bg-icons' : ""}`}></span>
-                <p className='font-semibold text-sm w-auto'>{item.itemName}</p>
+                <p className={`font-semibold text-sm w-auto ${item.itemName === 'Hot dishes' ? 'text-[#EA736D]' : ""}`}>{item.itemName}</p>
             </li>
         )
     })
