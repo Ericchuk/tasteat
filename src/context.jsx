@@ -202,6 +202,7 @@ const AppProvider = ({ children }) => {
     },
   ]);
   const [proceed, setProceed] = useState(false);
+  const [payment, setPayment] = useState(false);
 
   const data = datas.map((item) => {
     const { color, id, indicate, amount, desc } = item;
@@ -236,9 +237,31 @@ const AppProvider = ({ children }) => {
     orderItems.filter((index) => index.id === item.id);
   }
 
+  // cart buttons function 
   function closeCart() {
     setOpenCart(!openCart);
+    setProceed(false)
   }
+  
+  function showPayment() {
+    setProceed(true)
+    setOpenCart(false);
+  }
+
+  function confirmPayment(){
+    setPayment(true)
+  }
+
+  function cancelPayment(){
+    setPayment(false)
+  }
+  function cancelLocation(){
+    setPayment(false)
+  }
+
+  // function processLocation(){
+  //   setPayment(false)
+  // }
 
   function change(item) {
     setSidebarIcons(location.pathname);
@@ -248,6 +271,9 @@ const AppProvider = ({ children }) => {
         : setRemoveCart(false);
     }
   }
+
+  
+
   return (
     <AppContext.Provider
       value={{
@@ -269,7 +295,13 @@ const AppProvider = ({ children }) => {
         datas,
         mostOrderedFood,
         proceed,
-        setProceed
+        setProceed,
+        payment,
+        setPayment,
+        showPayment,
+        confirmPayment,
+        cancelPayment,
+        cancelLocation
       }}
     >
       {children}

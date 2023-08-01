@@ -1,10 +1,13 @@
-import back from '../../../assets/sidebar icons/Line.svg'
-import plus from '../../../assets/sidebar icons/plus.svg';
+import back from '../../assets/sidebar icons/Line.svg'
+import plus from '../../assets/sidebar icons/plus.svg';
+import { useContext } from 'react';
+import { AppContext } from '../../context';
 
 export default function ConfirmationHeader(){
+    const {closeCart} = useContext(AppContext)
     return(
         <header className="border-b pb-5 border-line">
-            <img src={back} alt="back" className="py-5"/>
+            <img src={back} alt="back" className="py-5 rounded-lg" onClick={closeCart}/>
             <aside className="flex justify-between items-center">
                 <div>
                     <h3 className="font-semibold text-3xl text-white my-2">Confirmation</h3>

@@ -1,4 +1,4 @@
-import checked from "../../../assets/sidebar icons/tick-icon.svg";
+import checked from "../../assets/sidebar icons/tick-icon.svg";
 
 
 export default function PaymentMethod({card,verified, paymentMethod }) {

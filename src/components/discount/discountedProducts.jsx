@@ -19,7 +19,7 @@ export default function DiscountedProducts() {
                         <section>
                             {
                         discount ?
-                        <aside key={id} className='relative flex flex-col justify-end items-center w-48 h-72 m-5 mb-10 bg-sidebar text-white rounded-xl relative py-4'>
+                        <aside key={id} className='relative flex flex-col justify-end items-center w-48 h-72 m-5 mb-10 bg-sidebar text-white rounded-xl  py-4'>
                             <img src={dishImage} alt={dishName} className='rounded-circle absolute -top-10' />
                             <p className='text-center w-36 my-3'>{dishName}</p>
                             <div className="text-white font-semibold text-base w-[93px] h-[46px] bg-bg-icons flex justify-center items-center absolute top-[60px] left-0 rounded-br-2xl drop-shadow-3xl">

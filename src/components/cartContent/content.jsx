@@ -3,28 +3,18 @@ import { AppContext } from '../../context';
 import Order from './orders';
 import CartFooter from './cartFooter'
 import CartFooterButton from './cartFooterButton';
-import ConfirmationPage from './payment/confirmation'
-import PaymentPage from './payment/paymentPage';
-import LocationPage from './location/locationPage'
 import '../../styles/cart.css'
 
 export default function CartContent() {
 
-  const { closeCart, orderItems, proceed, setProceed, setOpenCart } = useContext(AppContext)
+  const { closeCart, orderItems, setProceed,setOpenCart,showPayment } = useContext(AppContext)
 
-  function showPayment() {
-    setProceed(true)
-  }
+ 
 
   return (
     <section className={`div relative w-6/12 p-6 bg-sidebar text-white`}>
       
-    {proceed ?  <section className='absolute top-0 bg-sidebar '>
-        <ConfirmationPage />
-        <PaymentPage />
-        {/* <LocationPage /> */}
-      </section>
- : <section>
+     <section>
         <h2 className="text-white text-lg mb-5 font-semibold">Orders #34562</h2>
         <span className="bg-bg-icons text-white rounded-lg py-3 px-2.5">Delivery</span>
 
@@ -37,9 +27,9 @@ export default function CartContent() {
         </div>
         <Order />
         <CartFooter />
-        <CartFooterButton button1="Go back" button2="Continue to Payment" onClick1={closeCart} disbable2={orderItems.length === 0} onClick2={showPayment} />
+        <CartFooterButton button1="Go back" button2="Continue to Payment" onClick1={closeCart} disbable={orderItems.length === 0} onClick2={showPayment} />
 
-      </section>}
+      </section>
       
      
     </section>
