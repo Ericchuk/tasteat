@@ -20,8 +20,9 @@ export default function Order() {
             <span className="w-8/12 block">
               <p className="w-11/12 truncate font-medium">{item.dishName}</p>
               <small className="text-lighter-text">${item.price}</small>
+             {item.discount ? <small className="bg-bg-icons p-1 ml-2 rounded-sm">{item.discount * 100}% off</small> : ""}
             </span>
-            <p className="w-12 p-3.5 border border-line h-12 rounded-lg text-base flex justify-center items-center bg-bg-color font-medium">{item.orderQty}</p>
+            <input type="number" className="w-12 px-2 border border-line h-12 rounded-lg text-base flex justify-center items-center bg-bg-color text-center font-medium outline-none" min="1" placeholder={item.orderQty} />
           </aside>
           <label htmlFor="order note" className="w-12/12">
             <input type="text" placeholder="Order Note..." className="w-11/12 h-12 p-3.5 outline-none rounded-lg text-white bg-bg-color my-2 border border-line text-base" />
@@ -29,7 +30,7 @@ export default function Order() {
         </div>
         <aside className="flex justify-between items-center flex-col">
           <p className="font-medium pb-8">${total}</p>
-          <span className="flex justify-center items-center w-12 h-12 border border-bg-icons rounded-lg" onClick={() => removeFromCart(item)}>
+          <span className="flex justify-center items-center w-12 h-12 border border-bg-icons rounded-lg" onClick={() => removeFromCart(item.id)}>
             <img src={bin} alt="bin" />
             {open}
           </span>

@@ -2,10 +2,10 @@ import { useContext } from "react"
 import { AppContext } from "../../context"
 
 export default function DiscountedProducts() {
-    const { dishes } = useContext(AppContext);
+    const { dishes, addToCart } = useContext(AppContext);
 
     return (
-        <section className='w-11/12 bg-bg-color p-6 flex'>
+        <section className='w-11/12 bg-bg-color p-6 flex pt-16'>
             
             {
                 dishes.map((item) => {
@@ -23,7 +23,7 @@ export default function DiscountedProducts() {
                             <img src={dishImage} alt={dishName} className='rounded-circle absolute -top-10' />
                             <p className='text-center w-36 my-3'>{dishName}</p>
                             <div className="text-white font-semibold text-base w-[93px] h-[46px] bg-bg-icons flex justify-center items-center absolute top-[60px] left-0 rounded-br-2xl drop-shadow-3xl">
-                                <p>{discount}</p>
+                                <p>{discount * 100}% off</p>
                             </div>
                             <p className='text-[#ABBBC2] text-sm'>${price}</p>
                             <p className="text-[#ABBBC2] text-sm">{availability} available</p>

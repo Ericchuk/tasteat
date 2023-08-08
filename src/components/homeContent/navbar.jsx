@@ -4,40 +4,15 @@ import {AppContext} from '../../context'
 
 export default function MenuNavbar(){
 
-    const navItems = [
-        {
-            id:0,
-            itemName:"Hot dishes"
-        },
-        {
-            id:1,
-            itemName:"Cold dishes"
-        },
-        {
-            id:2,
-            itemName:"Soup"
-        },
-        {
-            id:3,
-            itemName:"Grill"
-        },
-        {
-            id:4,
-            itemName:"Appetizer"
-        },
-        {
-            id:5,
-            itemName:"Dessert"
-        },
-    ]
+    const {navItems, changeOnBar, onBar} = useContext(AppContext)
 
     const {openCart, removeCart} = useContext(AppContext)
 
     const navItem = navItems.map((item) => {
         return(
-            <li key={item.id} className={`list-none p-2 ml-5 items-start relative cursor-pointer text-white capitalize`}>
-                <span className={` w-10 h-0 absolute bottom-0 left-2 ${item.itemName === 'Hot dishes' ? 'border border-bg-icons' : ""}`}></span>
-                <p className={`font-semibold text-sm w-auto ${item.itemName === 'Hot dishes' ? 'text-[#EA736D]' : ""}`}>{item.itemName}</p>
+            <li key={item.id} onClick={() => changeOnBar(item)} className={`list-none p-2 ml-5 items-start relative cursor-pointer text-white capitalize`}>
+                <span className={` w-10 h-0 absolute bottom-0 left-2 ${item.itemName === onBar ? 'border border-bg-icons' : ""}`}></span>
+                <p className={`font-semibold text-sm w-auto ${item.itemName === onBar ? 'text-[#EA736D]' : ""}`}>{item.itemName}</p>
             </li>
         )
     })

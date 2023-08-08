@@ -2,6 +2,8 @@ import {useContext} from 'react'
 import {AppContext } from '../../context';
 export default function Stat() {
     const {datas} = useContext(AppContext);
+
+    
   return (
     <section className="relative">
       <div className="outer-circle h-[185px] w-[185px] py-[13px] px-3 rounded-circle">  

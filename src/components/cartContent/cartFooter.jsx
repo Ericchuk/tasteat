@@ -6,35 +6,23 @@ import {AppContext} from '../../context';
 
 export default function CartFooter(){
 
-    const {subTotal} = useContext(AppContext)
-
-    const lists = [
-        {
-            id:0,
-            title:'Discount',
-        },
-        {
-            id:1,
-            title:'Subtotal',
-        },
-    ]
+    const {total, discountTotal} = useContext(AppContext)
 
 
-
-    const list = lists.map((item) => {
-        return(
-            <aside key={item.id} className="flex justify-between items-center">
-                <p className="mb-3">{item.title}</p>
-                <b className="">${subTotal}</b>
-            </aside>
-        )
-    })
 
     return(
         <section>
             <footer className="drop-shadow-sm border-t border-line pt-4">
-            {list}
-    
+            <aside className="flex justify-between items-center">
+                <p className="mb-3">Discount</p>
+                <b className="">${discountTotal}</b>
+                {console.log(discountTotal)}
+            </aside>
+            <aside className="flex justify-between items-center">
+                <p className="mb-3">Subtotal</p>
+                <b className="">${total}</b>
+                {console.log(total)}
+            </aside>
         </footer>
         </section>
         
