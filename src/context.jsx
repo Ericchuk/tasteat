@@ -400,7 +400,7 @@ const signIn = (e) => {
   signInWithRedirect(auth, provider);
 };
 
-const signout = (e) => {
+const logOut = (e) => {
   e.preventDefault();
  auth.signOut().then(() => {
     // Sign-out successful.
@@ -439,8 +439,8 @@ useEffect(() => {
   .then((result) => {
     if(result){
       setAuthenticated(true)
-      setGmailOfUsers([...gmailOfUsers, item]);
-      console.log(result)
+      setGmailOfUsers([...gmailOfUsers, usera]);
+      console.log("result")
     }else{
       console.log("user not signed in")
     }
@@ -460,14 +460,6 @@ useLayoutEffect(() => {
     }
   })
 }, [])
-
-// useEffect(() => {
-//   signOut(auth).then(() => {
-//     // Sign-out successful.
-//   }).catch((error) => {
-//     // An error happened.
-//   });
-// }, [])
 
 
 
@@ -509,11 +501,11 @@ useLayoutEffect(() => {
         scrollFunc,
         total,
         discountTotal,
-        signout,
         signIn,
         gmailOfUsers,
         authenticated,
-        usera
+        usera,
+        logOut
       }}
     >
       {children}
