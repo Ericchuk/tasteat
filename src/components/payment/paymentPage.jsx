@@ -4,7 +4,7 @@ import PaymentValue from "./paymentValue";
 import CartFooterButton from "../cartContent/cartFooterButton";
 import card3 from "../../assets/sidebar icons/Card.svg";
 import paypal from "../../assets/sidebar icons/paypal.svg";
-import cash from "../../assets/sidebar icons/Card2.svg";
+import cash from "../../assets/sidebar icons/card2.svg";
 import { useContext } from "react";
 import { AppContext } from "../../context";
 import LocationPage from "../location/locationPage";
