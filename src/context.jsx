@@ -21,7 +21,8 @@ import NotificationContent from "./components/settings/notificationSetting";
 import ApperanceSetting from "./components/settings/appearanceSetting";
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "firebase/app";
-  import { GoogleAuthProvider, getAuth, signInWithRedirect,getRedirectResult, signOut } from 'firebase/auth'
+  import { GoogleAuthProvider, getAuth, signInWithRedirect,getRedirectResult, signOut } from 'firebase/auth';
+  import { getDatabase, ref, push } from 'firebase/database';
 
 const AppContext = React.createContext();
 
@@ -299,6 +300,9 @@ const AppProvider = ({ children }) => {
    const [gmailOfUsers, setGmailOfUsers] = useState([]);
    const [authenticated, setAuthenticated] = useState(null);
    const [usera, setUser] = useState([]);
+   const [newItem, setNewItem] = useState(false)
+ 
+
   // change showSetting function to display each component
   function changeShowSetting(item){
     setShowSetting(item.id)
@@ -394,6 +398,11 @@ const AppProvider = ({ children }) => {
     return window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  function toggleBoxToCreateNewItem(){
+    setNewItem(!newItem)
+  }
+
+
   // function calls for firebase 
 const signIn = (e) => {
   e.preventDefault();
@@ -432,6 +441,7 @@ const app = initializeApp(firebaseConfig);
 
 const provider =new GoogleAuthProvider();
 const auth = getAuth();
+const database = getDatabase();
 
 
 useEffect(() => {
@@ -450,6 +460,29 @@ useEffect(() => {
     setAuthenticated(false)
   });
 }, [])
+
+
+// function to push item to  database 
+const [dishName, setDishName] = useState("")
+const [dishPrice, setDishPrice] = useState(0)
+const [discountAmount, setDiscountAmount] = useState("")
+const [dishCategory, setDishCategory] = useState("")
+const [dishRange, setDishRange] = useState("")
+const [iAvailability, setAvailibility] = useState(0)
+const [dishPicture, setDishPicture] = useState()
+const reference = ref(database, `dishesData/ ${dishesData}`);
+function writeUserData(name, imageUrl) {
+  push(reference, {
+    dishName: dishName,
+    dishPrice: dishPrice,
+    dishPicture : imageUrl,
+    availability: available,
+    discountAmount:discount,
+    dishCategory:category,
+    dishRange: range,
+  });
+  setNewItem(false)
+}
 
 
 useLayoutEffect(() => {
@@ -505,7 +538,11 @@ useLayoutEffect(() => {
         gmailOfUsers,
         authenticated,
         usera,
-        logOut
+        logOut,
+        writeUserData,
+        newItem,
+        setNewItem,
+        toggleBoxToCreateNewItem,
       }}
     >
       {children}

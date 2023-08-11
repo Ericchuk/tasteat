@@ -1,10 +1,11 @@
 import add from "../../assets/sidebar icons/plus.svg";
 import { useContext } from "react";
 import { AppContext } from "../../context";
+import AddNewPage from "./addNewPage";
 
 
 export default function AddOrEditDish() {
-  const { dishes } = useContext(AppContext);
+  const { dishes, newItem, close, toggleBoxToCreateNewItem } = useContext(AppContext);
 
   const dish = dishes.map((item) => {
     const { dishName, dishImage, id, price, availability } = item;
@@ -26,15 +27,19 @@ export default function AddOrEditDish() {
       </div>
     );
   });
+
+
   return (
     <article className="relative">
       <section className="text-white flex flex-wrap px-5 py-6">
-        <div className="w-[221px] h-[299px] cursor-pointer border-dashed border-bg-icons border rounded-lg flex justify-center items-center flex-col m-1">
+        <div className="w-[221px] h-[299px] cursor-pointer border-dashed border-bg-icons border rounded-lg flex justify-center items-center flex-col m-1" onClick={toggleBoxToCreateNewItem}>
           <img src={add} alt="add" />
           <p className="text-bg-icons">Add new dish</p>
+          
         </div>
+        {newItem ? <AddNewPage /> : ""}
         {dish}
-        
+
       </section>
     </article>
   );

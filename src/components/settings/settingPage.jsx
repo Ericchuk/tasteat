@@ -6,7 +6,7 @@ export default function SettingsPage() {
   const {settingBarItems,showSetting} = useContext(AppContext);
 
   return (
-    <section className="w-11/12 bg-bg-color rounded-lg py-5 px-6">
+    <section className="w-full bg-bg-color py-5 px-6">
       <h2 className="font-universal text-heading font-semibold text-white mb-3 ">
         Settings
       </h2>
