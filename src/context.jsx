@@ -23,6 +23,7 @@ import ApperanceSetting from "./components/settings/appearanceSetting";
   import { initializeApp } from "firebase/app";
   import { GoogleAuthProvider, getAuth, signInWithRedirect,getRedirectResult, signOut } from 'firebase/auth';
   import { getDatabase, ref, push } from 'firebase/database';
+import { toast } from "react-toastify";
 
 const AppContext = React.createContext();
 
@@ -300,7 +301,8 @@ const AppProvider = ({ children }) => {
    const [gmailOfUsers, setGmailOfUsers] = useState([]);
    const [authenticated, setAuthenticated] = useState(null);
    const [usera, setUser] = useState([]);
-   const [newItem, setNewItem] = useState(false)
+   const [newItem, setNewItem] = useState(false);
+  //  const [dishesData] = useState([]);
  
 
   // change showSetting function to display each component
@@ -381,9 +383,6 @@ const AppProvider = ({ children }) => {
     setPayment(false)
   }
 
-  // function processLocation(){
-  //   setPayment(false)
-  // }
 
   function change(item) {
     setSidebarIcons(location.pathname);
@@ -441,7 +440,7 @@ const app = initializeApp(firebaseConfig);
 
 const provider =new GoogleAuthProvider();
 const auth = getAuth();
-const database = getDatabase();
+const db = getDatabase();
 
 
 useEffect(() => {
@@ -463,26 +462,53 @@ useEffect(() => {
 
 
 // function to push item to  database 
-const [dishName, setDishName] = useState("")
-const [dishPrice, setDishPrice] = useState(0)
-const [discountAmount, setDiscountAmount] = useState("")
-const [dishCategory, setDishCategory] = useState("")
-const [dishRange, setDishRange] = useState("")
-const [iAvailability, setAvailibility] = useState(0)
-const [dishPicture, setDishPicture] = useState()
-const reference = ref(database, `dishesData/ ${dishesData}`);
-function writeUserData(name, imageUrl) {
-  push(reference, {
-    dishName: dishName,
-    dishPrice: dishPrice,
-    dishPicture : imageUrl,
-    availability: available,
-    discountAmount:discount,
-    dishCategory:category,
-    dishRange: range,
-  });
-  setNewItem(false)
+const initialValues = {
+  dishName:"",
+  dishPrice:0,
+  dishCategory:"Hot dishes",
+  discountAmount:0,
+  dishRange:"Cheaper",
+  iAvailable:0,
 }
+
+const [dishDetails, setDishDetails] = useState(initialValues)
+const [data, setData] = useState({});
+const { dishName, discountAmount, dishPrice, dishImage, dishCategory, dishRange, iAvailable} = dishDetails
+letgit add .
+git c id = 0;
+
+
+  // handle form input 
+  function handleInputChange(e){
+    const {name, value} = e.target;
+    setDishDetails({...dishDetails, [name]:value})
+  }
+
+  const reference = ref(db, `subDishesData`);
+
+
+  function submit(e){
+    id++
+    e.preventDefault();
+    if(!dishName || !dishPrice || !discountAmount || !iAvailable || !dishCategory || !dishRange || !dishImage){
+     console.log(`error`)
+     toast.error("Please provide a valid input")
+    }else{
+      push(reference, {
+        id: id,
+        dishName: dishName,
+        dishPrice: dishPrice,
+        dishImage : dishImage,
+        availability: iAvailable,
+        discountAmount:discountAmount,
+        dishCategory:dishCategory,
+        dishRange: dishRange,
+      });
+      // setNewItem(false)
+      console.log(dishDetails)
+    }
+  }
+
 
 
 useLayoutEffect(() => {
@@ -539,10 +565,17 @@ useLayoutEffect(() => {
         authenticated,
         usera,
         logOut,
-        writeUserData,
         newItem,
         setNewItem,
         toggleBoxToCreateNewItem,
+        handleInputChange,
+        submit,
+        dishPrice,
+        dishRange,
+        dishCategory,
+        dishImage,
+        discountAmount,
+        iAvailable
       }}
     >
       {children}
