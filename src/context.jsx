@@ -19,10 +19,10 @@ import ProductMangementContent from "./components/settings/productManagementCont
 import SecurityContent from "./components/settings/securityContent";
 import NotificationContent from "./components/settings/notificationSetting";
 import ApperanceSetting from "./components/settings/appearanceSetting";
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "firebase/app";
-  import { GoogleAuthProvider, getAuth, signInWithRedirect,getRedirectResult, signOut } from 'firebase/auth';
-  import { getDatabase, ref, push } from 'firebase/database';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { GoogleAuthProvider, getAuth, signInWithRedirect, getRedirectResult, signOut } from 'firebase/auth';
+import { getDatabase, ref, push } from 'firebase/database';
 import { toast } from "react-toastify";
 
 const AppContext = React.createContext();
@@ -48,7 +48,7 @@ const AppProvider = ({ children }) => {
       price: 2.69,
       availability: "11 Bowls",
       orderQty: 1,
-      discount:0.5,
+      discount: 0.5,
       category: 'Cold dishes'
     },
     {
@@ -68,7 +68,7 @@ const AppProvider = ({ children }) => {
       price: 2.99,
       availability: "16 Bowls ",
       orderQty: 1,
-      discount:0,
+      discount: 0,
       category: 'Dessert'
     },
     {
@@ -78,7 +78,7 @@ const AppProvider = ({ children }) => {
       price: 3.29,
       availability: "22 Bowls ",
       orderQty: 1,
-      discount:0,
+      discount: 0,
       category: 'Hot dishes'
     },
     {
@@ -88,7 +88,7 @@ const AppProvider = ({ children }) => {
       price: 3.49,
       availability: "13 Bowls ",
       orderQty: 1,
-      discount:0,
+      discount: 0,
       category: 'Cold dishes'
     },
     {
@@ -98,7 +98,7 @@ const AppProvider = ({ children }) => {
       price: 3.59,
       availability: "17 Bowls ",
       orderQty: 1,
-      discount:0,
+      discount: 0,
       category: 'Dessert'
     },
     {
@@ -108,7 +108,7 @@ const AppProvider = ({ children }) => {
       price: 3.59,
       availability: "17 Bowls ",
       orderQty: 1,
-      discount:0,
+      discount: 0,
       category: 'Appetizer'
     },
   ]);
@@ -264,49 +264,49 @@ const AppProvider = ({ children }) => {
       navIcon: order,
       navName: "orders",
       desc: "Your previous orders",
-      component:<OrderSettings />,
+      component: <OrderSettings />,
     },
     {
       id: 1,
       navIcon: notification,
       navName: "notification",
       desc: "Customize your notification",
-      component:<NotificationContent />,
+      component: <NotificationContent />,
     },
     {
       id: 2,
       navIcon: discount,
       navName: "Product management",
       desc: "manage your product, pricing etc",
-      component:<ProductMangementContent />,
+      component: <ProductMangementContent />,
     },
     {
       id: 3,
       navIcon: security,
       navName: "security",
       desc: "configure password,pin, etc",
-      component:<SecurityContent />,
+      component: <SecurityContent />,
     },
     {
       id: 4,
       navIcon: info,
       navName: "about us",
       desc: "find out more about posty",
-      component:<ApperanceSetting />,
+      component: <ApperanceSetting />,
     },
   ])
-  const [total,setTotal] = useState(0);
+  const [total, setTotal] = useState(0);
   const [discountTotal, setDiscountTotal] = useState(0);
   const [showSetting, setShowSetting] = useState(0)
-   const [gmailOfUsers, setGmailOfUsers] = useState([]);
-   const [authenticated, setAuthenticated] = useState(null);
-   const [usera, setUser] = useState([]);
-   const [newItem, setNewItem] = useState(false);
+  const [gmailOfUsers, setGmailOfUsers] = useState([]);
+  const [authenticated, setAuthenticated] = useState(null);
+  const [usera, setUser] = useState([]);
+  const [newItem, setNewItem] = useState(false);
   //  const [dishesData] = useState([]);
- 
+
 
   // change showSetting function to display each component
-  function changeShowSetting(item){
+  function changeShowSetting(item) {
     setShowSetting(item.id)
 
   }
@@ -324,7 +324,7 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     let total = 0;
     orderItems.forEach((item) => {
-      total += item.price ;
+      total += item.price;
       setTotal(total)
     })
 
@@ -333,7 +333,7 @@ const AppProvider = ({ children }) => {
       discount += item.discount;
       setDiscountTotal(discount)
     })
-  }, [ orderItems])
+  }, [orderItems])
 
   useLayoutEffect(() => {
     {
@@ -397,111 +397,112 @@ const AppProvider = ({ children }) => {
     return window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function toggleBoxToCreateNewItem(){
+  function toggleBoxToCreateNewItem() {
     setNewItem(!newItem)
   }
 
 
   // function calls for firebase 
-const signIn = (e) => {
-  e.preventDefault();
-  signInWithRedirect(auth, provider);
-};
+  const signIn = (e) => {
+    e.preventDefault();
+    signInWithRedirect(auth, provider);
+  };
 
-const logOut = (e) => {
-  e.preventDefault();
- auth.signOut().then(() => {
-    // Sign-out successful.
-    setAuthenticated(false)
-    console.log("eee")
-  }).catch((error) => {
-    // An error happened.
-    console.log(error);
-  });
-}
+  const logOut = (e) => {
+    e.preventDefault();
+    auth.signOut().then(() => {
+      // Sign-out successful.
+      setAuthenticated(false)
+      console.log("eee")
+    }).catch((error) => {
+      // An error happened.
+      console.log(error);
+    });
+  }
 
   // firebase for signin in 
   // configuration
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyCeUWwfQTuU0e19mfj9Ry2jo_QJYXPqsq0",
-  authDomain: "restuarantdatabase-6be7d.firebaseapp.com",
-  projectId: "restuarantdatabase-6be7d",
-  storageBucket: "restuarantdatabase-6be7d.appspot.com",
-  messagingSenderId: "570133232909",
-  appId: "1:570133232909:web:9873018ddbf3ca6108c444"
-};
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey:import.meta.env.VITE_REACT_APP_API_KEY,
+    authDomain:import.meta.env.VITE_REACT_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_REACT_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_REACT_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_REACT_MESSAGING_ID,
+    appId: import.meta.env.VITE_REACT_APP_ID,
+  };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
 
-const provider =new GoogleAuthProvider();
-const auth = getAuth();
-const db = getDatabase();
-
-
-useEffect(() => {
-  getRedirectResult(auth)
-  .then((result) => {
-    if(result){
-      setAuthenticated(true)
-      setGmailOfUsers([...gmailOfUsers, usera]);
-      console.log("result")
-    }else{
-      console.log("user not signed in")
-    }
-  }).catch((error) => {
-    // Handle Errors here.
-    console.log(error)
-    setAuthenticated(false)
-  });
-}, [])
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+  const db = getDatabase();
 
 
-// function to push item to  database 
-const initialValues = {
-  dishName:"",
-  dishPrice:0,
-  dishCategory:"Hot dishes",
-  discountAmount:0,
-  dishRange:"Cheaper",
-  iAvailable:0,
-}
+  useEffect(() => {
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result) {
+          setAuthenticated(true)
+          setGmailOfUsers([...gmailOfUsers, usera]);
+          console.log("result")
+        } else {
+          console.log("user not signed in")
+        }
+      }).catch((error) => {
+        // Handle Errors here.
+        console.log(error)
+        setAuthenticated(false)
+      });
+  }, [])
 
-const [dishDetails, setDishDetails] = useState(initialValues)
-const [data, setData] = useState({});
-const { dishName, discountAmount, dishPrice, dishImage, dishCategory, dishRange, iAvailable} = dishDetails
-letgit add .
-git c id = 0;
+  // let [ids, setId] = useState(0);
+  // function to push item to  database 
+  const initialValues = {
+    dishName: "",
+    dishPrice: 0,
+    dishCategory: "Hot dishes",
+    discountAmount: 0,
+    dishRange: "Cheaper",
+    iAvailable: 0,
+    ids: 0,
+  }
+
+
+  const [dishDetails, setDishDetails] = useState(initialValues)
+  const [data, setData] = useState({});
+  const { dishName, discountAmount, dishPrice, dishImage, dishCategory, dishRange, iAvailable, ids } = dishDetails
+
 
 
   // handle form input 
-  function handleInputChange(e){
-    const {name, value} = e.target;
-    setDishDetails({...dishDetails, [name]:value})
+  function handleInputChange(e) {
+    const { name, value } = e.target;
+    setDishDetails({ ...dishDetails, [name]: value })
   }
 
   const reference = ref(db, `subDishesData`);
 
 
-  function submit(e){
-    id++
+  function submit(e) {
+    ids++
     e.preventDefault();
-    if(!dishName || !dishPrice || !discountAmount || !iAvailable || !dishCategory || !dishRange || !dishImage){
-     console.log(`error`)
-     toast.error("Please provide a valid input")
-    }else{
+    if (!dishName || !dishPrice || !discountAmount || !iAvailable || !dishCategory || !dishRange || !dishImage) {
+      console.log(`error`)
+      toast.error("Please provide a valid input")
+    } else {
       push(reference, {
-        id: id,
+        id: ids,
         dishName: dishName,
         dishPrice: dishPrice,
-        dishImage : dishImage,
+        dishImage: dishImage,
         availability: iAvailable,
-        discountAmount:discountAmount,
-        dishCategory:dishCategory,
+        discountAmount: discountAmount,
+        dishCategory: dishCategory,
         dishRange: dishRange,
       });
       // setNewItem(false)
@@ -511,14 +512,14 @@ git c id = 0;
 
 
 
-useLayoutEffect(() => {
-  auth.onAuthStateChanged((user) =>{
-    if(user){
-      const {displayName,email,photoURL} = user;
-      setUser(...usera, {displayName,email,photoURL})
-    }
-  })
-}, [])
+  useLayoutEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        const { displayName, email, photoURL } = user;
+        setUser(...usera, { displayName, email, photoURL })
+      }
+    })
+  }, [])
 
 
 
