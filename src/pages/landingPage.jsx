@@ -16,28 +16,35 @@ import ConfirmationPage from '../components/payment/confirmation'
 // import LocationPage from '../components/location/locationPage'
 
 export function LandingPage() {
-  const { removeCart, proceed, scrollFunc, sidebarIcons } = useContext(AppContext);
+  const { removeCart, proceed, scrollFunc, sidebarIcons, windowSize } = useContext(AppContext);
   useEffect(() => {
     scrollFunc();
-}, [sidebarIcons])
+  }, [sidebarIcons])
   return (
-    <section className={`flex justify-start`}>
-      <Sidebar />
-      <Routes>
-        <Route path="/" element={<HomeContent />} />
-        <Route path="notification" element={<NotificationPage />} />
-        <Route path="dashboard" element={<DashboardPage />} />
-        <Route path="setting" element={<SettingsPage />} />
-        <Route path='customer' element={<UserAccountPage />} />
-        <Route path='discount' element={<DiscountPage />} />
-        <Route path='order' element={<OrderReportPage />} />
-        <Route path='logOut' element={<SignOutPage />} />
-      </Routes>
-      {removeCart ? "" : <Cart />}
-      {proceed ? <section className='text-white w-full flex justify-end absolute bg-[#000000a6] h-[171vh]'>
-        <ConfirmationPage />
-        <PaymentPage />
-        </section>  :  ""}
-    </section>
+    <article>
+      {windowSize ? <section className={`flex justify-start`}>
+        <Sidebar />
+        <Routes>
+          <Route path="/" element={<HomeContent />} />
+          <Route path="notification" element={<NotificationPage />} />
+          <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="setting" element={<SettingsPage />} />
+          <Route path='customer' element={<UserAccountPage />} />
+          <Route path='discount' element={<DiscountPage />} />
+          <Route path='order' element={<OrderReportPage />} />
+          <Route path='logOut' element={<SignOutPage />} />
+        </Routes>
+        {removeCart ? "" : <Cart />}
+        {proceed ? <section className='text-white w-full flex justify-end absolute bg-[#000000a6] h-[171vh]'>
+          <ConfirmationPage />
+          <PaymentPage />
+        </section> : ""}
+      </section> : 
+      <section className="bg-bg-color h-screen text-center flex justify-center items-center">
+        <p className="text-lighter-text text-xl">This Web App is only suitable for desktop</p>
+      </section>
+      }
+    </article>
+
   );
 }

@@ -303,6 +303,8 @@ const AppProvider = ({ children }) => {
   const [usera, setUser] = useState([]);
   const [newItem, setNewItem] = useState(false);
   //  const [dishesData] = useState([]);
+  const[ windowSize, setWindowSize] = useState(false)
+  console.log(windowSize)
 
 
   // change showSetting function to display each component
@@ -341,6 +343,8 @@ const AppProvider = ({ children }) => {
         ? setRemoveCart(true)
         : setRemoveCart(false);
     }
+
+    {screen.width < 1200 ? setWindowSize(false) : setWindowSize(true)}
   });
 
   //check if item is in cart already
@@ -576,7 +580,8 @@ const AppProvider = ({ children }) => {
         dishCategory,
         dishImage,
         discountAmount,
-        iAvailable
+        iAvailable,
+        windowSize
       }}
     >
       {children}
