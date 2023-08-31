@@ -304,7 +304,6 @@ const AppProvider = ({ children }) => {
   const [newItem, setNewItem] = useState(false);
   //  const [dishesData] = useState([]);
   const[ windowSize, setWindowSize] = useState(false)
-  console.log(windowSize)
 
 
   // change showSetting function to display each component
@@ -479,7 +478,7 @@ const AppProvider = ({ children }) => {
 
   const [dishDetails, setDishDetails] = useState(initialValues)
   const [data, setData] = useState({});
-  const { dishName, discountAmount, dishPrice, dishImage, dishCategory, dishRange, iAvailable, ids } = dishDetails
+  const { dishName, discountAmount, dishPrice, dishImage, dishCategory, dishRange, iAvailable } = dishDetails
 
 
 
@@ -493,14 +492,12 @@ const AppProvider = ({ children }) => {
 
 
   function submit(e) {
-    ids++
     e.preventDefault();
     if (!dishName || !dishPrice || !discountAmount || !iAvailable || !dishCategory || !dishRange || !dishImage) {
       console.log(`error`)
       toast.error("Please provide a valid input")
     } else {
       push(reference, {
-        id: ids,
         dishName: dishName,
         dishPrice: dishPrice,
         dishImage: dishImage,

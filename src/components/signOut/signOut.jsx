@@ -5,15 +5,18 @@ import { AppContext } from '../../context';
 export default function SignOutPage(){
     const { authenticated, logOut } = useContext(AppContext)
     return(
-        <section className="bg-sidebar rounded-lg mt-5 w-full">
+        <section className="bg-bg-color w-full text-center">
             {authenticated ? 
                <div className="p-3 cursor-pointer" onClick={logOut}>
-                <div className="border-2 border-lighter-text rounded-lg flex justify-center items-center flex-col py-2 bg-bg-color">
+                <div>
                 <p className="text-sm text-white">Log out</p>
                 </div>
             </div>
             :
-             <SignedOut />}
+            <div className="text-center flex justify-center items-center pt-12 cursor-pointer">
+                 <SignedOut />
+            </div>
+            }
         </section>
     )
 }
