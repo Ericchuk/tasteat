@@ -22,7 +22,7 @@ import ApperanceSetting from "./components/settings/appearanceSetting";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider, getAuth, signInWithRedirect, getRedirectResult, signOut } from 'firebase/auth';
-import { getDatabase, ref, push } from 'firebase/database';
+import { getDatabase, ref, push, onValue } from 'firebase/database';
 import { toast } from "react-toastify";
 
 const AppContext = React.createContext();
@@ -430,12 +430,12 @@ const AppProvider = ({ children }) => {
 
   // Your web app's Firebase configuration
   const firebaseConfig = {
-    apiKey:import.meta.env.VITE_REACT_APP_API_KEY,
-    authDomain:import.meta.env.VITE_REACT_AUTH_DOMAIN,
-    projectId: import.meta.env.VITE_REACT_PROJECT_ID,
-    storageBucket: import.meta.env.VITE_REACT_STORAGE_BUCKET,
-    messagingSenderId: import.meta.env.VITE_REACT_MESSAGING_ID,
-    appId: import.meta.env.VITE_REACT_APP_ID,
+    apiKey:"AIzaSyCeUWwfQTuU0e19mfj9Ry2jo_QJYXPqsq0",
+    authDomain:"restuarantdatabase-6be7d.firebaseapp.com",
+    projectId: "restuarantdatabase-6be7d",
+    storageBucket: " restuarantdatabase-6be7d.appspot.com",
+    messagingSenderId:  "570133232909",
+    appId: "1:570133232909:web:9873018ddbf3ca6108c444",
   };
 
   // Initialize Firebase
@@ -486,6 +486,7 @@ const AppProvider = ({ children }) => {
   function handleInputChange(e) {
     const { name, value } = e.target;
     setDishDetails({ ...dishDetails, [name]: value })
+    console.log(dishDetails)
   }
 
   const reference = ref(db, `subDishesData`);

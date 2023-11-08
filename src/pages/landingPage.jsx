@@ -22,7 +22,7 @@ export function LandingPage() {
   }, [sidebarIcons])
   return (
     <article>
-      {windowSize ? <section className={`flex justify-start`}>
+      {windowSize ? <section className={`flex justify-start border-red`}>
         <Sidebar />
         <Routes>
           <Route path="/" element={<HomeContent />} />

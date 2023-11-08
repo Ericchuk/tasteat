@@ -6,7 +6,7 @@ export default function OrderInNotification() {
 
   const list = notificationOrder.map((item) => {
     return (
-      <ul>
+      <ul key={item.id}>
         <li className="flex justify-between items-center px-5 py-2 my-2">
           {removeCart ? <div className="flex justify-start items-center w-[142px]">
             <img src={item.customerImage} alt={item.customerName} className="mr-4" />
