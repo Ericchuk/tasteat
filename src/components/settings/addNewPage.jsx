@@ -3,7 +3,8 @@ import { useContext } from "react";
 import { AppContext } from "../../context";
 
 export default function AddNewPage() {
-    const {writeUserData, setNewItem, newItem, toggleBoxToCreateNewItem, handleInputChange, submit, dishImage, dishName, discountAmount, dishCategory, dishRange,iAvailable, dishPrice} = useContext(AppContext)
+    const {writeUserData, setNewItem, newItem, toggleBoxToCreateNewItem, handleInputChange, submit, dishImage, dishName, discountAmount, dishCategory, dishRange,iAvailable, dishPrice, imageToStorage,
+    setImageToStorage,handleImageUpload} = useContext(AppContext)
 
 
     return (
@@ -11,7 +12,7 @@ export default function AddNewPage() {
             <main className="w-4/12 bg-bg-color px-4 py-6 rounded-lg">
                 <label htmlFor="image" className="">
                     <p>Dish Image</p>
-                    <input type="file" name="dishImage" accept="image/png, image/gif, image/jpeg, img/svg" value={dishImage} onChange={handleInputChange} />
+                    <input type="file" name="dishImage" accept="image/png, image/gif, image/jpeg, img/svg" value={dishImage} onChange={handleImageUpload} />
                 </label>
                 <label htmlFor="dishName" className="w-full mt-2">
                     <p className="mt-2">Dish Name</p>

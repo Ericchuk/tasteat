@@ -23,6 +23,7 @@ import ApperanceSetting from "./components/settings/appearanceSetting";
 import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider, getAuth, signInWithRedirect, getRedirectResult, signOut } from 'firebase/auth';
 import { getDatabase, ref, push, onValue } from 'firebase/database';
+import { getStorage, ref as sRef, uploadBytes } from "firebase/storage"
 import { toast } from "react-toastify";
 
 const AppContext = React.createContext();
@@ -444,7 +445,8 @@ const AppProvider = ({ children }) => {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
   const db = getDatabase();
-
+  const storage = getStorage(app);
+  const [imageToStorage, setImageToStorage] = useState(null)
 
   useEffect(() => {
     getRedirectResult(auth)
@@ -489,11 +491,29 @@ const AppProvider = ({ children }) => {
     console.log(dishDetails)
   }
 
+  
+  function handleImageUpload(e){
+    setImageToStorage(e.target.files[0])
+    console.log("weewe")
+  }
+
   const reference = ref(db, `subDishesData`);
 
 
   function submit(e) {
     e.preventDefault();
+      // for imageUpload
+      if(imageToStorage === null){
+        return
+      }
+  
+      // to firebase
+      const imageRef = sRef(storage, `images/${imageToStorage.name}`)
+      uploadBytes(imageRef, imageToStorage).then(() => {
+        toast.success("Image Uploaded")
+        console.log("success")
+      })
+      console.log(imageToStorage)
     if (!dishName || !dishPrice || !discountAmount || !iAvailable || !dishCategory || !dishRange || !dishImage) {
       console.log(`error`)
       toast.error("Please provide a valid input")
@@ -501,7 +521,7 @@ const AppProvider = ({ children }) => {
       push(reference, {
         dishName: dishName,
         dishPrice: dishPrice,
-        dishImage: dishImage,
+        dishImage:dishImage,
         availability: iAvailable,
         discountAmount: discountAmount,
         dishCategory: dishCategory,
@@ -579,7 +599,10 @@ const AppProvider = ({ children }) => {
         dishImage,
         discountAmount,
         iAvailable,
-        windowSize
+        windowSize,
+        imageToStorage,
+        setImageToStorage,
+        handleImageUpload
       }}
     >
       {children}
