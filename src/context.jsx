@@ -470,6 +470,7 @@ const AppProvider = ({ children }) => {
   const initialValues = {
     dishName: "",
     dishPrice: 0,
+    imageToStorage:imageToStorage,
     dishCategory: "Hot dishes",
     discountAmount: 0,
     dishRange: "Cheaper",
@@ -488,7 +489,6 @@ const AppProvider = ({ children }) => {
   function handleInputChange(e) {
     const { name, value } = e.target;
     setDishDetails({ ...dishDetails, [name]: value })
-    console.log(dishDetails)
   }
 
   
@@ -503,9 +503,9 @@ const AppProvider = ({ children }) => {
   function submit(e) {
     e.preventDefault();
       // for imageUpload
-      if(imageToStorage === null){
-        return
-      }
+      // if(imageToStorage === null){
+      //   return
+      // }
   
       // to firebase
       const imageRef = sRef(storage, `images/${imageToStorage.name}`)
