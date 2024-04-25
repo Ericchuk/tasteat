@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
-import noodles from "./assets/landing page image/image 4 (3).png";
+import noodles from "./assets/landing page image/image 4 (3).png"; 
 import pasta from "./assets/landing page image/image 4.png";
 import dumpling from "./assets/landing page image/image 4 (1).png";
 import spinach from "./assets/landing page image/image 4 (2).png";
@@ -322,6 +322,15 @@ const AppProvider = ({ children }) => {
   }
 
 
+    // filter items by the amount to find which is cheaper, mid range and luxury
+
+    const [filterByPrice, setFilterByPrice] = useState('Cheaper');
+
+    function changeFilter(item){
+      setFilterByPrice(item.price)
+      console.log(filterByPrice)
+    }
+
   // get the total amount of item purchased
   useEffect(() => {
     let total = 0;
@@ -500,6 +509,7 @@ const AppProvider = ({ children }) => {
   const reference = ref(db, `subDishesData`);
 
 
+
   function submit(e) {
     e.preventDefault();
       // for imageUpload
@@ -602,7 +612,9 @@ const AppProvider = ({ children }) => {
         windowSize,
         imageToStorage,
         setImageToStorage,
-        handleImageUpload
+        handleImageUpload,
+        filterByPrice,
+        changeFilter
       }}
     >
       {children}

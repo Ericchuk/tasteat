@@ -1,6 +1,6 @@
 export default function DashboardStats({img,stat,indicators,figures,desc,alt1,alt2}){
     return(
-        <section className="bg-sidebar rounded-lg p-4 h-36 w-[199px]">
+        <section className="bg-sidebar rounded-lg p-4 h-36 w-[32%]">
             <aside className="flex justify-between items-center w-[120px] h-[39px]">
                 <span className="bg-bg-color w-[38px] h-[38px] rounded-lg flex justify-center items-center">
                    <img src={img} alt={alt1} className="h-6 w-6" /> 

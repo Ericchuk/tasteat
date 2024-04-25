@@ -58,7 +58,7 @@ export default function DashboardPage() {
       </main>
       
 
-      <main className="">
+      <main className="lg:w-[30%]">
         <aside className="bg-sidebar rounded-lg py-3 mb-4">
         <MostOrdered headerText="Most ordered" />
         <div className="w-12/12 px-5">

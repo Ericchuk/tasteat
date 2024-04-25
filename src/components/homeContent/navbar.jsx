@@ -4,9 +4,7 @@ import {AppContext} from '../../context'
 
 export default function MenuNavbar(){
 
-    const {navItems, changeOnBar, onBar} = useContext(AppContext)
-
-    const {openCart, removeCart} = useContext(AppContext)
+    const {navItems, changeOnBar, onBar, openCart, removeCart} = useContext(AppContext)
 
     const navItem = navItems.map((item) => {
         return(
