@@ -324,11 +324,11 @@ const AppProvider = ({ children }) => {
 
     // filter items by the amount to find which is cheaper, mid range and luxury
 
-    const [filterByPrice, setFilterByPrice] = useState('Cheaper');
-
+    const [filterByPrice, setFilterByPrice] = useState('');
+    
     function changeFilter(item){
-      setFilterByPrice(item.price)
-      console.log(filterByPrice)
+      setFilterByPrice(item.target.value)
+
     }
 
   // get the total amount of item purchased
