@@ -313,22 +313,29 @@ const AppProvider = ({ children }) => {
 
   }
 
-  const [onBar, setOnBar] = useState('Hot dishes')
+  const [onBar, setOnBar] = useState('Hot dishes');
+  const [dashboardDish, setDashboardDish] = useState([]);
 
   //change onBar function
 
   function changeOnBar(item) {
     setOnBar(item.itemName)
+    if(onBar){
+      // setDashboardDish([])
+      console.log(onBar)
+    }else{
+      console.log(dashboardDish)
+    }
   }
 
 
     // filter items by the amount to find which is cheaper, mid range and luxury
 
-    const [filterByPrice, setFilterByPrice] = useState('');
+    const [filterByPrice, setFilterByPrice] = useState('Cheaper');
     
     function changeFilter(item){
       setFilterByPrice(item.target.value)
-
+      console.log(filterByPrice)
     }
 
   // get the total amount of item purchased
