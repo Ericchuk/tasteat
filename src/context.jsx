@@ -320,12 +320,17 @@ const AppProvider = ({ children }) => {
 
   function changeOnBar(item) {
     setOnBar(item.itemName)
-    if(onBar){
-      // setDashboardDish([])
-      console.log(onBar)
-    }else{
-      console.log(dashboardDish)
-    }
+    // if(onBar){
+    //   // setDashboardDish([])
+    //   console.log(onBar)
+    // }else{
+    //   console.log(dashboardDish)
+    // }
+    dishes.filter((dish) => {
+      dish.category === onBar
+    }).filter((dish) => {
+      dish.price < 3 || dish.price > 3
+    })
   }
 
 
