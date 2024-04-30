@@ -11,8 +11,8 @@ export default function Cart() {
       {openCart ? (
         <CartContent />
       ) : (
-        <div className="h-4/4 w-20 flex justify-center items-start py-5 bg-sidebar" onClick={closeCart}>
-          <li className="h-12 w-12 bg-bg-icons flex items-center justify-center rounded-lg">
+        <div className="h-4/4 w-20 flex justify-center items-start py-5 bg-sidebar" >
+          <li className="h-12 w-12 bg-bg-icons flex items-center justify-center rounded-lg" onClick={closeCart}>
             <img src={cart} alt="cart" className="h-5" />
           </li>
         </div>

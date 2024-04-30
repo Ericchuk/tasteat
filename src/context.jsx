@@ -235,15 +235,15 @@ const AppProvider = ({ children }) => {
   const [navItems, setNavItems] = useState([
     {
       id: 0,
-      itemName: "Hot dishes"
+      itemName: "Hot dishes",
     },
     {
       id: 1,
-      itemName: "Cold dishes"
+      itemName: "Cold dishes",
     },
     {
       id: 2,
-      itemName: "Soup"
+      itemName: "Soup",
     },
     {
       id: 3,
@@ -258,6 +258,21 @@ const AppProvider = ({ children }) => {
       itemName: "Dessert"
     },
   ])
+
+  const options = [
+    {
+      id:0,
+      option:'Cheaper'
+    },
+    {
+      id:1,
+      option:'Mid-Range'
+    },
+    {
+      id:2,
+      option:'Luxury'
+    }
+  ]
 
   const [settingBarItems, setSettingBarItems] = useState([
     {
@@ -317,30 +332,21 @@ const AppProvider = ({ children }) => {
   const [dashboardDish, setDashboardDish] = useState([]);
 
   //change onBar function
-
+  const [filterByPrice, setFilterByPrice] = useState('Cheaper');
   function changeOnBar(item) {
     setOnBar(item.itemName)
-    // if(onBar){
-    //   // setDashboardDish([])
-    //   console.log(onBar)
-    // }else{
-    //   console.log(dashboardDish)
-    // }
-    dishes.filter((dish) => {
-      dish.category === onBar
-    }).filter((dish) => {
-      dish.price < 3 || dish.price > 3
-    })
   }
 
 
     // filter items by the amount to find which is cheaper, mid range and luxury
 
-    const [filterByPrice, setFilterByPrice] = useState('Cheaper');
-    
     function changeFilter(item){
       setFilterByPrice(item.target.value)
-      console.log(filterByPrice)
+    }
+
+    // search box  function
+    function useSearch(){
+      
     }
 
   // get the total amount of item purchased
@@ -626,7 +632,8 @@ const AppProvider = ({ children }) => {
         setImageToStorage,
         handleImageUpload,
         filterByPrice,
-        changeFilter
+        changeFilter,
+        options
       }}
     >
       {children}

@@ -2,35 +2,14 @@ import dropdownicon from "../../assets/sidebar icons/Mask.png";
 import { useContext, useState } from "react";
 import { AppContext } from "../../context";
 export default function DishSelect() {
-  const options = [
-    {
-      id:0,
-      options:'Cheaper'
-    },
-    {
-      id:1,
-      options:'Mid-Range'
-    },
-    {
-      id:2,
-      options:'Luxury'
-    }
-  ]
-  const { changeFilter, filterByPrice } = useContext(AppContext);
 
-  function filter(e){
-    // if(filterByPrice === e.target.value && filterByPrice < 3){
-    //     console.log("Cheaper")
-    // }else{
-    //   console.log("ddddd")
-    // }
-    console.log("fdffff")
-  }
+  const { changeFilter, filterByPrice, options } = useContext(AppContext);
+
 
   const optionsArray = options.map((item) => {
     return (
           
-          <option key={item.id} value={item.options} onClick={filter}>{item.options}</option>
+          <option key={item.id} value={item.option}>{item.option}</option>
     )
   })
 

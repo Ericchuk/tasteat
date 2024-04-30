@@ -21,7 +21,6 @@ export default function CartFooter(){
             <aside className="flex justify-between items-center">
                 <p className="mb-3">Subtotal</p>
                 <b className="">${total}</b>
-                {console.log(total)}
             </aside>
         </footer>
         </section>
