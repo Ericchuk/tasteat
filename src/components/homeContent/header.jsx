@@ -21,21 +21,7 @@ const {removeCart, searchItems, searchText, filteredItems} = useContext(AppConte
                  />
             </label>}
 
-            {
-                filteredItems.map((items) => {
-                    const { id,
-                        dishImage,
-                        dishName,
-                        price,
-                        availability,
-                        category } = items;
-                        return(
-                            <ul key={id}>
-                                <li>{dishName}</li>
-                            </ul>
-                        )
-                })
-            }
+            
         </header>
     )
 }
