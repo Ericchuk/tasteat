@@ -335,6 +335,7 @@ const AppProvider = ({ children }) => {
   const [filterByPrice, setFilterByPrice] = useState('Cheaper');
   function changeOnBar(item) {
     setOnBar(item.itemName)
+    setDisplay(false)
   }
 
 
@@ -342,6 +343,7 @@ const AppProvider = ({ children }) => {
 
     function changeFilter(item){
       setFilterByPrice(item.target.value)
+      setDisplay(false)
     }
 
     // search box  function

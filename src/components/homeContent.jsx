@@ -2,6 +2,7 @@ import DishSelect from "./homeContent/dishSelect";
 import Dishes from "./homeContent/dishes";
 import Header from "./homeContent/header";
 import MenuNavbar from "./homeContent/navbar";
+import Filtered from "./homeContent/filteredFromSearch"
 import { useContext } from "react";
 import { AppContext } from "../context";
 
