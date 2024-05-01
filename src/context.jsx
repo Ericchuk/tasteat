@@ -345,8 +345,19 @@ const AppProvider = ({ children }) => {
     }
 
     // search box  function
-    function useSearch(){
-      
+    const [searchText, setSearchText] = useState();
+    const [filteredItems, setFIlteredItems] = useState([])
+    function searchItems(e){
+      setSearchText(e.target.value)
+      let filteredItems = [];
+      for(let i = 0; i < dishes.length; i++){
+        const dishName = dishes[i].dishName.toLowerCase();
+        if(dishName.includes(searchText)){
+          filteredItems.push(dishes[i])
+        }
+      }
+      setFIlteredItems(filteredItems)
+      console.log(filteredItems)
     }
 
   // get the total amount of item purchased
@@ -633,7 +644,9 @@ const AppProvider = ({ children }) => {
         handleImageUpload,
         filterByPrice,
         changeFilter,
-        options
+        options,
+        searchItems,
+        filteredItems
       }}
     >
       {children}
