@@ -7,7 +7,6 @@ export default function Stat() {
   return (
     <section className="relative">
       <div className="outer-circle h-[185px] w-[185px] py-[13px] px-3 rounded-circle">  
-        {console.log(datas[0].color)}
       </div>
         {/* circle1 */}
        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="185px" height="185px" className="absolute z-10 top-0 left-0">

@@ -363,7 +363,15 @@ const AppProvider = ({ children }) => {
         )
       }
       setFIlteredItems(filteredItems)
-      console.log(filteredItems)
+    }
+
+    // filter notifications 
+
+    const [notificationFilter, setNotificationFilter] = useState("Filter options");
+
+    function filterNotification(item){
+      setNotificationFilter(item.target.value)
+      console.log(item.target.value)
     }
 
   // get the total amount of item purchased
@@ -653,7 +661,9 @@ const AppProvider = ({ children }) => {
         options,
         searchItems,
         filteredItems,
-        display
+        display,
+        notificationFilter,
+        filterNotification
       }}
     >
       {children}

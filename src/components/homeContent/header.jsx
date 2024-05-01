@@ -7,7 +7,7 @@ const today = new Date();
 const options = { year: 'numeric', month: 'long', day: 'numeric' };
 const currentDate = today.toLocaleString('en-US', options);
 
-const {removeCart, searchItems, searchText, filteredItems} = useContext(AppContext);
+const {removeCart, searchItems, searchText} = useContext(AppContext);
 
     return(
         <header className='flex justify-between item-center text-white'>
@@ -20,8 +20,6 @@ const {removeCart, searchItems, searchText, filteredItems} = useContext(AppConte
                 <img src={search} alt="search-icon" className='absolute start-3'
                  />
             </label>}
-
-            
         </header>
     )
 }
