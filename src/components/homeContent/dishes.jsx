@@ -8,7 +8,7 @@ export default function Dishes(){
     return(
         <section className='flex flex-wrap justify-start items-center py-14'>
             {
-                {dishes}.map((item) => {
+                dishes.map((item) => {
                     const { id,
                         dishImage,
                         dishName,

@@ -347,6 +347,7 @@ const AppProvider = ({ children }) => {
     // search box  function
     const [searchText, setSearchText] = useState();
     const [filteredItems, setFIlteredItems] = useState([])
+    const [display, setDisplay] = useState(false)
     function searchItems(e){
       setSearchText(e.target.value)
       let filteredItems = [];
@@ -354,7 +355,10 @@ const AppProvider = ({ children }) => {
         const dishName = dishes[i].dishName.toLowerCase();
         if(dishName.includes(searchText)){
           filteredItems.push(dishes[i])
-        }
+          setDisplay(true)
+        }else(
+          setDisplay(false)
+        )
       }
       setFIlteredItems(filteredItems)
       console.log(filteredItems)
@@ -646,7 +650,8 @@ const AppProvider = ({ children }) => {
         changeFilter,
         options,
         searchItems,
-        filteredItems
+        filteredItems,
+        display
       }}
     >
       {children}

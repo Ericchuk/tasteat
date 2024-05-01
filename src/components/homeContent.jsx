@@ -6,13 +6,13 @@ import { useContext } from "react";
 import { AppContext } from "../context";
 
 export default function HomeContent(){
-    const { filteredItems} = useContext(AppContext);
+    const { display} = useContext(AppContext);
     return(
         <section className="bg-bg-color  w-11/12 py-7 px-7">
             <Header headText="Riverside Flamez"  />
             <MenuNavbar />
             <DishSelect />
-            <Dishes />
+           {display ? <Filtered /> : <Dishes />}
         </section>
     )
 }
