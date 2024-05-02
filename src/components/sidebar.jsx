@@ -79,7 +79,7 @@ export default function Sidebar(){
     })
 
     return(
-        <nav className='nav relative bg-sidebar w-24 h-4/4 flex justify-start items-center flex-col gap-y-2 py-5'>
+        <nav className='nav relative bg-sidebar w-24 h-[123vh] flex justify-start items-center flex-col gap-y-2 py-5'>
             <Logo />
             <ul className='list-none flex flex-col items-between border-red'>
                 {navItem}

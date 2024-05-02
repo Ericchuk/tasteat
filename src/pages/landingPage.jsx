@@ -13,7 +13,7 @@ import OrderReportPage from '../components/orderReports/orderReportPafe';
 import SignOutPage from '../components/signOut/signOut'
 import PaymentPage from '../components/payment/paymentPage'
 import ConfirmationPage from '../components/payment/confirmation'
-// import LocationPage from '../components/location/locationPage'
+import LocationPage from '../components/location/locationPage'
 
 export function LandingPage() {
   const { removeCart, proceed, scrollFunc, sidebarIcons, windowSize } = useContext(AppContext);
@@ -35,9 +35,13 @@ export function LandingPage() {
           <Route path='logOut' element={<SignOutPage />} />
         </Routes>
         {removeCart ? "" : <Cart />}
-        {proceed ? <section className='text-white w-full flex justify-end absolute bg-[#000000a6] h-[171vh]'>
+        {proceed ? <section className='text-white w-full flex justify-end absolute bg-[#000000a6] h-[123vh]'>
           <ConfirmationPage />
           <PaymentPage />
+        
+          <section className='text-white bg-bg-color pt-[70px]'><LocationPage />
+        </section>
+
         </section> : ""}
       </section> : 
       <section className="bg-bg-color h-screen text-center flex justify-center items-center">

@@ -5,7 +5,7 @@ export default function CartFooterButton({button1,onClick1, button2, disable2, o
   const { closeCart, orderItems } = useContext(AppContext);
 
   return (
-    <main className="flex justify-around items-center mt-5">
+    <main className="flex justify-around items-center mt-2">
       <button
         className="h-12 w-40 border p-3.5 flex justify-center items-center border-bg-icons rounded-lg text-bg-icons font-semibold text-sm"
         onClick={onClick1}

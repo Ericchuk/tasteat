@@ -7,7 +7,7 @@ import { AppContext } from '../../context';
 export default function ConfirmationPage(){
     const {payment} = useContext(AppContext)
     return(
-        <section className={`border-r border-line bg-bg-color w-[420px] px-3 py-4 rounded-l-lg rounded-bl-lg  h-[171vh] z-10  ${payment ? "absolute -left-6" : "relative left-auto" }`}>
+        <section className={`border-r border-line bg-bg-color w-[420px] px-3 py-4 rounded-l-lg rounded-bl-lg  h-[123vh] z-10  ${payment ? "absolute left-[5%]" : "relative left-auto" }`}>
             <ConfirmationHeader />
             <Orders />
             <CartFooter />

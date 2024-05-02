@@ -12,7 +12,7 @@ import LocationPage from "../location/locationPage";
 export default function PaymentPage() {
   const {confirmPayment,cancelPayment, payment} = useContext(AppContext)
   return (
-    <section className={`bg-bg-color ${payment ? 'w-[955px]' : "w-[450px]"} flex`}>
+    <section className={`bg-bg-color  h-[123vh] w-[450px] flex`}>
       <section className="w-[480px] border-r border-line px-6 pt-[70px]">
         <Header headText="Payment" headerDescription="3 payment method available" />
       <h3 className="semibold text-white text-xl my-4">Payment Method</h3>
@@ -26,7 +26,7 @@ export default function PaymentPage() {
         <PaymentMethod card={cash} verified="false" paymentMethod="Cash" />
       </aside>
 
-      <aside className="py-7 border-b border-line mb-80">
+      <aside className="py-7 border-b border-line mb-20">
         <PaymentValue
           label="Cardholder name"
           type="text"
@@ -48,10 +48,8 @@ export default function PaymentPage() {
         
       </aside>
 
-     {payment ? " " : <CartFooterButton button1="Cancel" onClick1={cancelPayment} button2="Continue Payment" onClick2={confirmPayment} />}
       </section>
      { payment ? <section className='text-white bg-bg-color pt-[70px]'>
-        <LocationPage />
         </section> : ""}
     </section>
   );

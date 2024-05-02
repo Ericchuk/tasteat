@@ -327,9 +327,23 @@ const AppProvider = ({ children }) => {
   const [filterByPrice, setFilterByPrice] = useState('Cheaper');
   const [notificationFilter, setNotificationFilter] = useState("Filter options");
   const [inCart, setInCart] = useState(true)
-  // const [newdishName, setnewDishname] = useState('')
+  const [location, setLocation] = useState({})
 
+// location fetching function 
+function getLocation(){
+  useEffect(() => {
+    if()
+    navigator.geolocation.getCurrentPosition((position) => {
+    setLocation({
+      latitude:position.coords.latitude,
+      longitude:position.coords.longitude
+    })
+  })
+  })
+  
 
+  console.log(location)
+}
 
   // change showSetting function to display each component
   function changeShowSetting(item) {
@@ -666,7 +680,9 @@ const AppProvider = ({ children }) => {
         filteredItems,
         display,
         notificationFilter,
-        filterNotification
+        filterNotification,
+        getLocation,
+        location
       }}
     >
       {children}
