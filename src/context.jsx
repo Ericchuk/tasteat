@@ -518,6 +518,7 @@ const AppProvider = ({ children }) => {
       });
   }, [])
 
+
   // let [ids, setId] = useState(0);
   // function to push item to  database 
   const initialValues = {
@@ -556,7 +557,7 @@ const AppProvider = ({ children }) => {
 
   function submit(e) {
     e.preventDefault();
-    const alphabetMatch = /^[a-zA-Z]+$/;
+    const alphabetMatch = /[a-zA-Z]+$/;
     const numericMatch = /[0-9]/;
       // for imageUpload
       // if(imageToStorage === null){
@@ -570,21 +571,20 @@ const AppProvider = ({ children }) => {
       //   console.log("success")
       // })
       // console.log(imageToStorage)
-    if (alphabetMatch.test(dishName) && dishName !== "" && dishPrice !== "" && numericMatch.test(dishPrice) && iAvailable !== "" && numericMatch.test(iAvailable)) {
-      console.log(`success`)
+    if (alphabetMatch.test(dishName) && dishName !== "" && dishPrice !== "" && dishPrice !== 0 && numericMatch.test(dishPrice) && iAvailable !== "" && iAvailable !== 0 && numericMatch.test(iAvailable)) {
+      console.log(dishImage)
+      push(reference, {
+          dishName: dishName,
+          dishPrice: dishPrice,
+          dishImage:dishImage,
+          availability: iAvailable,
+          discountAmount: discountAmount,
+          dishCategory: dishCategory,
+          dishRange: dishRange,
+        });
     } else {
-      // push(reference, {
-      //   dishName: dishName,
-      //   dishPrice: dishPrice,
-      //   dishImage:dishImage,
-      //   availability: iAvailable,
-      //   discountAmount: discountAmount,
-      //   dishCategory: dishCategory,
-      //   dishRange: dishRange,
-      // });
       // setNewItem(false)
-      console.log(dishDetails)
-      toast.error("Please provide a valid input")
+      console.log("error")
     }
   }
 

@@ -12,7 +12,7 @@ export default function AddNewPage() {
             <main className="w-4/12 bg-bg-color px-4 py-6 rounded-lg">
                 <label htmlFor="image" className="">
                     <p>Dish Image</p>
-                    <input type="file" name="dishImage" accept="image/png, image/gif, image/jpeg, img/svg" value={dishImage} onChange={handleImageUpload} />
+                    <input type="file" name="dishImage" accept="image/png, image/gif, image/jpeg, img/svg" onChange={handleImageUpload} />
                 </label>
                 <label htmlFor="dishName" className="w-full mt-2">
                     <p className="mt-2">Dish Name</p>
