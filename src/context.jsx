@@ -318,8 +318,17 @@ const AppProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(null);
   const [usera, setUser] = useState([]);
   const [newItem, setNewItem] = useState(false);
-  //  const [dishesData] = useState([]);
   const[ windowSize, setWindowSize] = useState(false)
+  const [searchText, setSearchText] = useState();
+  const [filteredItems, setFIlteredItems] = useState([])
+  const [display, setDisplay] = useState(false)
+  const [onBar, setOnBar] = useState('Hot dishes');
+  const [dashboardDish, setDashboardDish] = useState([]);
+  const [filterByPrice, setFilterByPrice] = useState('Cheaper');
+  const [notificationFilter, setNotificationFilter] = useState("Filter options");
+  const [inCart, setInCart] = useState(true)
+  // const [newdishName, setnewDishname] = useState('')
+
 
 
   // change showSetting function to display each component
@@ -328,16 +337,12 @@ const AppProvider = ({ children }) => {
 
   }
 
-  const [onBar, setOnBar] = useState('Hot dishes');
-  const [dashboardDish, setDashboardDish] = useState([]);
-
   //change onBar function
-  const [filterByPrice, setFilterByPrice] = useState('Cheaper');
+
   function changeOnBar(item) {
     setOnBar(item.itemName)
     setDisplay(false)
   }
-
 
     // filter items by the amount to find which is cheaper, mid range and luxury
 
@@ -347,9 +352,7 @@ const AppProvider = ({ children }) => {
     }
 
     // search box  function
-    const [searchText, setSearchText] = useState();
-    const [filteredItems, setFIlteredItems] = useState([])
-    const [display, setDisplay] = useState(false)
+
     function searchItems(e){
       setSearchText(e.target.value)
       let filteredItems = [];
@@ -367,7 +370,7 @@ const AppProvider = ({ children }) => {
 
     // filter notifications 
 
-    const [notificationFilter, setNotificationFilter] = useState("Filter options");
+
 
     function filterNotification(item){
       setNotificationFilter(item.target.value)
@@ -399,7 +402,6 @@ const AppProvider = ({ children }) => {
   });
 
   //check if item is in cart already
-  const [inCart, setInCart] = useState(true)
 
   function addToCart(item) {
     if (orderItems.some((cart) => cart.id === item.id)) {
@@ -522,9 +524,9 @@ const AppProvider = ({ children }) => {
     dishName: "",
     dishPrice: 0,
     imageToStorage:imageToStorage,
-    dishCategory: "Hot dishes",
+    dishCategory: onBar,
     discountAmount: 0,
-    dishRange: "Cheaper",
+    dishRange: filterByPrice,
     iAvailable: 0,
     ids: 0,
   }
@@ -554,33 +556,35 @@ const AppProvider = ({ children }) => {
 
   function submit(e) {
     e.preventDefault();
+    const alphabetMatch = /^[a-zA-Z]+$/;
+    const numericMatch = /[0-9]/;
       // for imageUpload
       // if(imageToStorage === null){
       //   return
       // }
   
       // to firebase
-      const imageRef = sRef(storage, `images/${imageToStorage.name}`)
-      uploadBytes(imageRef, imageToStorage).then(() => {
-        toast.success("Image Uploaded")
-        console.log("success")
-      })
-      console.log(imageToStorage)
-    if (!dishName || !dishPrice || !discountAmount || !iAvailable || !dishCategory || !dishRange || !dishImage) {
-      console.log(`error`)
-      toast.error("Please provide a valid input")
+      // const imageRef = sRef(storage, `images/${imageToStorage.name}`)
+      // uploadBytes(imageRef, imageToStorage).then(() => {
+      //   toast.success("Image Uploaded")
+      //   console.log("success")
+      // })
+      // console.log(imageToStorage)
+    if (alphabetMatch.test(dishName) && dishName !== "" && dishPrice !== "" && numericMatch.test(dishPrice) && iAvailable !== "" && numericMatch.test(iAvailable)) {
+      console.log(`success`)
     } else {
-      push(reference, {
-        dishName: dishName,
-        dishPrice: dishPrice,
-        dishImage:dishImage,
-        availability: iAvailable,
-        discountAmount: discountAmount,
-        dishCategory: dishCategory,
-        dishRange: dishRange,
-      });
+      // push(reference, {
+      //   dishName: dishName,
+      //   dishPrice: dishPrice,
+      //   dishImage:dishImage,
+      //   availability: iAvailable,
+      //   discountAmount: discountAmount,
+      //   dishCategory: dishCategory,
+      //   dishRange: dishRange,
+      // });
       // setNewItem(false)
       console.log(dishDetails)
+      toast.error("Please provide a valid input")
     }
   }
 

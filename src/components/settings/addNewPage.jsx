@@ -8,7 +8,7 @@ export default function AddNewPage() {
 
 
     return (
-        <section className="fixed top-0 left-0 bg-[#0a0a0a7e] w-full h-screen flex justify-center items-center">
+        <section className="fixed top-0 left-0 bg-[#0a0a0a7e] w-full h-screen flex justify-center items-center z-10">
             <main className="w-4/12 bg-bg-color px-4 py-6 rounded-lg">
                 <label htmlFor="image" className="">
                     <p>Dish Image</p>

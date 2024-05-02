@@ -5,16 +5,15 @@ import AddNewPage from "./addNewPage";
 
 
 export default function AddOrEditDish() {
-  const { dishes, newItem, close, toggleBoxToCreateNewItem } = useContext(AppContext);
+  const { dishes, newItem, close, toggleBoxToCreateNewItem, onBar } = useContext(AppContext);
 
   const dish = dishes.map((item) => {
-    const { dishName, dishImage, id, price, availability } = item;
+    const { dishName, dishImage, id, price, availability, category } = item;
     return (
       <div
-        key={id}
-        className=" w-[221px] h-[299px] m-1 pt-5 flex justify-center items-center flex-col text-center bg-sidebar rounded-lg border border-line"
-      >
-        <img src={dishImage} alt={dishName} className="rounded-circle" />
+        key={id}    >
+        {category === onBar ? <div className=" w-[221px] h-[299px] m-2 pt-5 flex justify-center items-center flex-col text-center bg-sidebar rounded-lg border border-line">
+          <img src={dishImage} alt={dishName} className="rounded-circle" />
         <p className="w-40 my-2">{dishName}</p>
         <aside className="flex justify-between items-center w-36 px-2 text-lighter-text my-1">
           <small>${price}</small>
@@ -24,6 +23,8 @@ export default function AddOrEditDish() {
         <button className="w-full bg-[#ea736d5e] text-bg-icons h-[52px] mt-1 rounded-b-lg">
           Edit dish
         </button>
+        </div> : ""}
+        
       </div>
     );
   });

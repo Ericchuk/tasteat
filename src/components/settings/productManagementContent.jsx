@@ -14,7 +14,7 @@ export default function ProductMangementContent(){
           <MenuNavbar />
           <AddOrEditDish />
           <aside className="w-12/12 px-6 relative">
-            <footer className="sticky bottom-0 border border-line w-full flex justify-start items-center">
+            <footer className="sticky bottom-0  border-line w-full flex justify-start items-center">
         <CartFooterButton button1="Discards Changes" button2="Save changes" />
       </footer>
           </aside>
