@@ -328,16 +328,24 @@ const AppProvider = ({ children }) => {
   const [notificationFilter, setNotificationFilter] = useState("Filter options");
   const [inCart, setInCart] = useState(true)
   const [location, setLocation] = useState([])
-  const [cardDetails, setCardDetails] = useState([])
+  const [cardName, setCardName] = useState()
+  const [orderQty, setOrderQty] = useState(1)
 
-
+  // cart quantity
+  function setQty(e, item){
+    // if (orderItems.some((cart) => cart.id === item.id)) {
+    //   setOrderQty(e.target.value)
+    // }else{
+      
+    // }
+    setOrderItems
+    
+    console.log(orderQty)
+  }
   // get card detail 
 
-  function cardPayment(e){
-    const {name, value} = e.target;
-    setCardDetails((prevData) => {
-      [...prevData, {name, value}]
-    })
+  function cardDetailsName(e){
+   setCardName(cardName)
   }
 
   function makePayment(){
@@ -415,6 +423,7 @@ function getLocation(){
     orderItems.forEach((item) => {
       total += item.price;
       setTotal(total)
+      
     })
 
     let discount = 0;
@@ -442,7 +451,6 @@ function getLocation(){
     } else {
       setOrderItems([...orderItems, item]);
       setInCart(true);
-      console.log(orderItems.some((cart) => cart.id === item.id));
     }
   }
 
@@ -703,8 +711,11 @@ function getLocation(){
         filterNotification,
         getLocation,
         location,
-        cardPayment,
-        makePayment
+        cardDetailsName,
+        makePayment,
+        cardName,
+        orderQty,
+        setQty,
       }}
     >
       {children}

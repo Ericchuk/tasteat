@@ -10,7 +10,7 @@ import { AppContext } from "../../context";
 import LocationPage from "../location/locationPage";
 
 export default function PaymentPage() {
-  const {confirmPayment,cancelPayment, payment} = useContext(AppContext)
+  const {confirmPayment,cancelPayment, payment, cardName, makePayment} = useContext(AppContext)
   return (
     <section className={`bg-bg-color  h-[123vh] w-[450px] flex`}>
       <section className="w-[480px] border-r border-line px-6 pt-[70px]">
@@ -31,7 +31,8 @@ export default function PaymentPage() {
           label="Cardholder name"
           type="text"
           placeholder="Levi Ackerman"
-          value=""
+          value={cardName}
+          onChange={makePayment}
         />
         <PaymentValue
           label="Card number"

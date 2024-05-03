@@ -1,17 +1,12 @@
-import noodles from "../../assets/landing page image/image 4 (3).png";
-import pasta from "../../assets/landing page image/image 4.png";
-import dumpling from "../../assets/landing page image/image 4 (1).png";
-import spinach from "../../assets/landing page image/image 4 (2).png";
-import instantNoodles from "../../assets/landing page image/image 4(1).png";
 import bin from '../../assets/sidebar icons/bin.svg'
 import {useContext} from 'react';
 import {AppContext} from '../../context'
 
 export default function Order() {
-    const {orderItems, removeFromCart} = useContext(AppContext)
+    const {orderItems, removeFromCart, orderQty, setQty} = useContext(AppContext)
 
   const orderItem = orderItems.map((item) => {
-    const total = item.orderQty * item.price 
+    const total = orderQty * item.price 
     return (
       <aside key={item.id} className="flex justify-between items-center my-4">
         <div>
@@ -22,7 +17,7 @@ export default function Order() {
               <small className="text-lighter-text">${item.price}</small>
              {item.discount ? <small className="bg-bg-icons p-1 ml-2 rounded-sm">{item.discount * 100}% off</small> : ""}
             </span>
-            <input type="number" className="w-12 px-2 border border-line h-12 rounded-lg text-base flex justify-center items-center bg-bg-color text-center font-medium outline-none" min="1" placeholder={item.orderQty} />
+            <input type="number" className="w-12 px-2 border border-line h-12 rounded-lg text-base flex justify-center items-center bg-bg-color text-center font-medium outline-none" min="1" placeholder={orderQty} value={orderQty} onChange={() => setQty(orderItems[item.id])}/>
           </aside>
           <label htmlFor="order note" className="w-12/12">
             <input type="text" placeholder="Order Note..." className="w-11/12 h-12 p-3.5 outline-none rounded-lg text-white bg-bg-color my-2 border border-line text-base" />
@@ -32,7 +27,6 @@ export default function Order() {
           <p className="font-medium pb-8">${total}</p>
           <span className="flex justify-center items-center w-12 h-12 border border-bg-icons rounded-lg" onClick={() => removeFromCart(item.id)}>
             <img src={bin} alt="bin" />
-            {open}
           </span>
         </aside>
       </aside>
