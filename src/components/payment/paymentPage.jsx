@@ -31,11 +31,13 @@ export default function PaymentPage() {
           label="Cardholder name"
           type="text"
           placeholder="Levi Ackerman"
+          value=""
         />
         <PaymentValue
           label="Card number"
           type="number"
           placeholder="2564 1421 0897 1244"
+          value=""
         />
         <main className="flex justify-between items-center w-12/12">
             <PaymentValue

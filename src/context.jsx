@@ -327,22 +327,41 @@ const AppProvider = ({ children }) => {
   const [filterByPrice, setFilterByPrice] = useState('Cheaper');
   const [notificationFilter, setNotificationFilter] = useState("Filter options");
   const [inCart, setInCart] = useState(true)
-  const [location, setLocation] = useState({})
+  const [location, setLocation] = useState([])
+  const [cardDetails, setCardDetails] = useState([])
 
-// location fetching function 
-function getLocation(){
-  useEffect(() => {
-    if()
-    navigator.geolocation.getCurrentPosition((position) => {
-    setLocation({
-      latitude:position.coords.latitude,
-      longitude:position.coords.longitude
+
+  // get card detail 
+
+  function cardPayment(e){
+    const {name, value} = e.target;
+    setCardDetails((prevData) => {
+      [...prevData, {name, value}]
     })
-  })
-  })
+  }
+
+  function makePayment(){
+    console.log(cardDetails)
+  }
+  
+// location fetching function not fixed
+function getLocation(){
+//   useEffect(() => {
+//     if(navigator.geolocation){
+//       navigator.geolocation.getCurrentPosition((position) => {
+//     setLocation({
+//       latitude:position.coords.latitude,
+//       longitude:position.coords.longitude
+//     })
+//   })
+//     }else{
+//       console.error(error)
+//     }
+    
+//   }, [])
   
 
-  console.log(location)
+//   console.log(location)
 }
 
   // change showSetting function to display each component
@@ -439,7 +458,8 @@ function getLocation(){
   }
 
   function showPayment() {
-    setProceed(true)
+    {orderItems < 1 ? setProceed(false) :setProceed(true) }
+    
     setOpenCart(false);
   }
 
@@ -682,7 +702,9 @@ function getLocation(){
         notificationFilter,
         filterNotification,
         getLocation,
-        location
+        location,
+        cardPayment,
+        makePayment
       }}
     >
       {children}
