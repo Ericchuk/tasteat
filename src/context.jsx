@@ -333,14 +333,11 @@ const AppProvider = ({ children }) => {
 
   // cart quantity
   function setQty(e, item){
-    // if (orderItems.some((cart) => cart.id === item.id)) {
-    //   setOrderQty(e.target.value)
-    // }else{
-      
-    // }
-    setOrderItems
-    
-    console.log(orderQty)
+    // if(item === item.id){
+    //   console.log("wwww")
+    // }else{console.log("esssss")}
+    // console.log(orderItems[item.id])
+    // setOrderQty(e.target.value)
   }
   // get card detail 
 
@@ -451,12 +448,12 @@ function getLocation(){
     } else {
       setOrderItems([...orderItems, item]);
       setInCart(true);
+      console.log(orderItems.some((cart) => cart.id === item.id));
     }
   }
 
   function removeFromCart(itemId) {
     setOrderItems(orderItems.filter((item) => item.id !== itemId))
-    console.log(itemId)
   }
 
   // cart buttons function 
