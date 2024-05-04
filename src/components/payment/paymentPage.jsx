@@ -10,7 +10,9 @@ import { AppContext } from "../../context";
 import LocationPage from "../location/locationPage";
 
 export default function PaymentPage() {
-  const {confirmPayment,cancelPayment, payment, cardName, makePayment} = useContext(AppContext)
+  const {cardName, cardNumber,expiryDate,cvv,    cardNumberFunc,
+    cvvFunc,
+    expiryFunc, payment, cardNameFunc} = useContext(AppContext)
   return (
     <section className={`bg-bg-color  h-[123vh] w-[450px] flex`}>
       <section className="w-[480px] border-r border-line px-6 pt-[70px]">
@@ -27,26 +29,24 @@ export default function PaymentPage() {
       </aside>
 
       <aside className="py-7 border-b border-line mb-20">
-        <PaymentValue
-          label="Cardholder name"
-          type="text"
-          placeholder="Levi Ackerman"
-          value={cardName}
-          onChange={makePayment}
-        />
-        <PaymentValue
-          label="Card number"
-          type="number"
-          placeholder="2564 1421 0897 1244"
-          value=""
-        />
+         <aside className="flex justify-start items-start flex-col">
+            <label className="text-base text-white my-2 capitalize">Cardholder name</label>
+            <input type="text" placeholder="Levi Ackerman" value={cardName} onChange={cardNameFunc} className="h-12 w-full rounded-lg p-3.5 flex justify-center items-center outline-none bg-bg-color my-2 border border-line text-base" />
+        </aside>
+        <aside className="flex justify-start items-start flex-col">
+            <label className="text-base text-white my-2 capitalize">Card number</label>
+            <input type="number" placeholder="2564 1421 0897 1244" value={cardNumber} onChange={cardNumberFunc} className="h-12 w-full rounded-lg p-3.5 flex justify-center items-center outline-none bg-bg-color my-2 border border-line text-base" />
+        </aside>
+        
         <main className="flex justify-between items-center w-12/12">
-            <PaymentValue
-          label="Expiration date"
-          type="date"
-          placeholder="02/2022" className="w-[172px]"
-        />
-        <PaymentValue label="CVV" type="password" placeholder="***" className=""/>
+        <aside className="flex justify-start items-start flex-col">
+            <label className="text-base text-white my-2 capitalize">Expiration date</label>
+            <input type="date" placeholder="02/22" value={expiryDate} onChange={expiryFunc} className="h-12 w-full rounded-lg p-3.5 flex justify-center items-center outline-none bg-bg-color my-2 border border-line text-base" />
+        </aside>
+        <aside className="flex justify-start items-start flex-col">
+            <label className="text-base text-white my-2 capitalize">CVV</label>
+            <input type="password" placeholder="***" value={cvv} onChange={cvvFunc} className="h-12 w-full rounded-lg p-3.5 flex justify-center items-center outline-none bg-bg-color my-2 border border-line text-base" />
+        </aside>
         </main>
         
       </aside>
