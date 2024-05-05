@@ -29,7 +29,8 @@ import {
   signOut,
 } from "firebase/auth";
 import { getDatabase, ref, push, onValue, set } from "firebase/database";
-import { getStorage, ref as sRef, uploadBytes } from "firebase/storage";
+import { getStorage, ref as sRef, uploadBytes, listAll } from "firebase/storage";
+import {v4} from 'uuid'
 import { toast } from "react-toastify";
 
 const AppContext = React.createContext();
@@ -573,7 +574,9 @@ const AppProvider = ({ children }) => {
   const auth = getAuth();
   const db = getDatabase();
   const storage = getStorage(app);
-  const [imageToStorage, setImageToStorage] = useState(null);
+  const [imageToStorage, setImageToStorage] = useState("");
+  const [imageUrl, setImageUrl] = useState([]);
+
 
   useEffect(() => {
     getRedirectResult(auth)
@@ -598,7 +601,7 @@ const AppProvider = ({ children }) => {
   const initialValues = {
     dishName: "",
     dishPrice: 0,
-    imageToStorage: imageToStorage,
+    // imageToStorage: imageToStorage,
     dishCategory: onBar,
     discountAmount: 0,
     dishRange: filterByPrice,
@@ -607,12 +610,11 @@ const AppProvider = ({ children }) => {
   };
 
   const [dishDetails, setDishDetails] = useState(initialValues);
-  const [data, setData] = useState({});
+
   const {
     dishName,
     discountAmount,
     dishPrice,
-    dishImage,
     dishCategory,
     dishRange,
     iAvailable,
@@ -624,10 +626,10 @@ const AppProvider = ({ children }) => {
     setDishDetails({ ...dishDetails, [name]: value });
   }
 
-  function handleImageUpload(e) {
-    setImageToStorage(e.target.files[0]);
-    console.log("weewe");
-  }
+  // function handleImageUpload(e) {
+  //   setImageToStorage(e.target.files[0]);
+  //   console.log("weewe");
+  // }
 
   const reference = ref(db, `subDishesData`);
 
@@ -635,18 +637,17 @@ const AppProvider = ({ children }) => {
     e.preventDefault();
     const alphabetMatch = /[a-zA-Z]+$/;
     const numericMatch = /[0-9]/;
-    // for imageUpload
-    // if(imageToStorage === null){
-    //   return
-    // }
 
-    // to firebase
-    // const imageRef = sRef(storage, `images/${imageToStorage.name}`)
-    // uploadBytes(imageRef, imageToStorage).then(() => {
-    //   toast.success("Image Uploaded")
-    //   console.log("success")
-    // })
-    // console.log(imageToStorage)
+    // for imageUpload
+    // if(imageToStorage !== null){
+    //   const imgRef = ref(imageDb, `files/${v4()}`)
+    //  uploadBytes(imgRef, imageToStorage).then(value => {
+    //   getDownloadURL(value.ref).then(url => {
+    //     setImageUrl(data => [...data, url])
+    //   })
+    //  })
+    //  }
+
     if (
       alphabetMatch.test(dishName) &&
       dishName !== "" &&
@@ -656,12 +657,19 @@ const AppProvider = ({ children }) => {
       iAvailable !== "" &&
       iAvailable !== 0 &&
       numericMatch.test(iAvailable)
+      && imageToStorage !== null
     ) {
-      console.log(dishImage);
+      //image function
+      const imgRef = sRef(storage, `files/${v4()}`)
+     uploadBytes(imgRef, imageToStorage).then(value => {
+      getDownloadURL(value.ref).then(url => {
+        setImageUrl(data => [...data, url])
+      })
+     })
+
       push(reference, {
         dishName: dishName,
         dishPrice: dishPrice,
-        dishImage: dishImage,
         availability: iAvailable,
         discountAmount: discountAmount,
         dishCategory: dishCategory,
@@ -673,6 +681,15 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  useEffect(() => {
+    listAll(sRef(storage,`files`)).then(imageToStorage => {
+      imageToStorage.items.forEach(val =>{
+          getDownloadURL(val).then(url => {
+            setImageUrl(data => [...data, url])
+          })
+       })
+      })
+  },[])
   useLayoutEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -733,13 +750,12 @@ const AppProvider = ({ children }) => {
         dishPrice,
         dishRange,
         dishCategory,
-        dishImage,
         discountAmount,
         iAvailable,
         windowSize,
         imageToStorage,
         setImageToStorage,
-        handleImageUpload,
+        // handleImageUpload,
         filterByPrice,
         changeFilter,
         options,
