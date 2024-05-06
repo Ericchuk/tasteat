@@ -29,7 +29,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { getDatabase, ref, push, onValue, set } from "firebase/database";
-import { getStorage, ref as sRef, uploadBytes, listAll } from "firebase/storage";
+import { getStorage, ref as sRef, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 import {v4} from 'uuid'
 import { toast } from "react-toastify";
 
@@ -554,19 +554,19 @@ const AppProvider = ({ children }) => {
 
   // firebase for signin in
   // configuration
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
 
+  
   // Your web app's Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyCeUWwfQTuU0e19mfj9Ry2jo_QJYXPqsq0",
     authDomain: "restuarantdatabase-6be7d.firebaseapp.com",
+    databaseURL: "https://restuarantdatabase-6be7d-default-rtdb.firebaseio.com",
     projectId: "restuarantdatabase-6be7d",
-    storageBucket: " restuarantdatabase-6be7d.appspot.com",
+    storageBucket: "restuarantdatabase-6be7d.appspot.com",
     messagingSenderId: "570133232909",
-    appId: "1:570133232909:web:9873018ddbf3ca6108c444",
+    appId: "1:570133232909:web:9873018ddbf3ca6108c444"
   };
-
+  
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
 
@@ -626,10 +626,10 @@ const AppProvider = ({ children }) => {
     setDishDetails({ ...dishDetails, [name]: value });
   }
 
-  // function handleImageUpload(e) {
-  //   setImageToStorage(e.target.files[0]);
-  //   console.log("weewe");
-  // }
+  function handleImageUpload(e) {
+    setImageToStorage(e.target.files[0]);
+    console.log("weewe");
+  }
 
   const reference = ref(db, `subDishesData`);
 
@@ -755,7 +755,7 @@ const AppProvider = ({ children }) => {
         windowSize,
         imageToStorage,
         setImageToStorage,
-        // handleImageUpload,
+        handleImageUpload,
         filterByPrice,
         changeFilter,
         options,
