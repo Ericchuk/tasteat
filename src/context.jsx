@@ -343,6 +343,8 @@ const AppProvider = ({ children }) => {
   const [deliveryAddress, setDeliveryAddress] = useState();
   const [deliveryNote, setDeliveryNote] = useState();
   const [orderQty, setOrderQty] = useState(1);
+  const [imageUrl, setImageUrl] = useState([]);
+  const [retrieved, setRetrieved] = useState([])
 
   // cart quantity
   function setQty(e, item) {
@@ -457,20 +459,21 @@ const AppProvider = ({ children }) => {
     });
   }, [orderItems]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     {
       location.pathname === "/dashboard" ||
       location.pathname === "/setting" ||
-      location.pathname === "/order"
+      location.pathname === "/order"  ||
+      location.pathname === "/customer" ||
+      location.pathname === "/notification"
         ? setRemoveCart(true)
         : setRemoveCart(false);
     }
-
-    {
+    
+    { 
       screen.width < 1200 ? setWindowSize(false) : setWindowSize(true);
     }
-  });
-
+  },[removeCart]);
   //check if item is in cart already
 
   function addToCart(item) {
@@ -517,10 +520,14 @@ const AppProvider = ({ children }) => {
     {
       item.itemName === "/dashboard" ||
       item.itemName === "/setting" ||
-      location.pathname === "/order"
+      item.itemName === "/order" ||
+      item.itemName === "/customer" ||
+      item.itemName === "/notification"
         ? setRemoveCart(true)
         : setRemoveCart(false);
     }
+
+    {console.log(removeCart)}
   }
 
   function scrollFunc() {
@@ -575,7 +582,7 @@ const AppProvider = ({ children }) => {
   const db = getDatabase();
   const storage = getStorage(app);
   const [imageToStorage, setImageToStorage] = useState("");
-  const [imageUrl, setImageUrl] = useState([]);
+
 
 
   useEffect(() => {
@@ -628,25 +635,18 @@ const AppProvider = ({ children }) => {
 
   function handleImageUpload(e) {
     setImageToStorage(e.target.files[0]);
-    console.log("weewe");
+    // console.log("weewe");
   }
 
+  //fetching the image and datas
+
+  
   const reference = ref(db, `subDishesData`);
 
   function submit(e) {
     e.preventDefault();
     const alphabetMatch = /[a-zA-Z]+$/;
     const numericMatch = /[0-9]/;
-
-    // for imageUpload
-    // if(imageToStorage !== null){
-    //   const imgRef = ref(imageDb, `files/${v4()}`)
-    //  uploadBytes(imgRef, imageToStorage).then(value => {
-    //   getDownloadURL(value.ref).then(url => {
-    //     setImageUrl(data => [...data, url])
-    //   })
-    //  })
-    //  }
 
     if (
       alphabetMatch.test(dishName) &&
@@ -663,7 +663,8 @@ const AppProvider = ({ children }) => {
       const imgRef = sRef(storage, `files/${v4()}`)
      uploadBytes(imgRef, imageToStorage).then(value => {
       getDownloadURL(value.ref).then(url => {
-        setImageUrl(data => [...data, url])
+        // let key = val.name
+        setImageUrl(data => [url, ...data])
       })
      })
 
@@ -689,7 +690,26 @@ const AppProvider = ({ children }) => {
           })
        })
       })
+
+      const detailRef = ref(db,`subDishesData`)
+      onValue(detailRef, (snapshot) => {
+        let records = [];
+        snapshot.forEach((childSnapshot) => {
+          const childKey = childSnapshot.key;
+          const childData = childSnapshot.val();
+          records.push({key:childKey, data:childData});
+        })
+        setRetrieved(records)
+      })
   },[])
+
+  // {console.log(retrieved[0]?.data)}
+  // {console.log(imageUrl)}
+  // {retrieved.map((item, index) => {
+  //   console.log(imageUrl[index])
+  // })}
+
+  
   useLayoutEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -781,6 +801,8 @@ const AppProvider = ({ children }) => {
         expiryFunc,
         deliveryAddFunc,
         deliveryNoteFunc,
+        retrieved,
+        imageUrl
       }}
     >
       {children}

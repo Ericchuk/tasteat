@@ -2,28 +2,38 @@ import add from "../../assets/sidebar icons/plus.svg";
 import { useContext } from "react";
 import { AppContext } from "../../context";
 import AddNewPage from "./addNewPage";
-
+import editIcon from '../../assets/landing page image/Vector.png'
+import deleteIcon from '../../assets/sidebar icons/bin.svg'
 
 export default function AddOrEditDish() {
-  const { dishes, newItem, close, toggleBoxToCreateNewItem, onBar } = useContext(AppContext);
+  const { newItem, retrieved, imageUrl, toggleBoxToCreateNewItem, onBar } = useContext(AppContext);
 
-  const dish = dishes.map((item) => {
-    const { dishName, dishImage, id, price, availability, category } = item;
+  const dish = retrieved.map((item, index) => {
+    const { dishName, id, dishPrice, availability, category } = item.data;
     return (
       <div
-        key={id}    >
-        {category === onBar ? <div className=" w-[221px] h-[299px] m-2 pt-5 flex justify-center items-center flex-col text-center bg-sidebar rounded-lg border border-line">
-          <img src={dishImage} alt={dishName} className="rounded-circle" />
+        key={index}    >
+       <div className=" w-[221px] h-[299px] m-2 pt-5 flex justify-center items-center flex-col text-center bg-sidebar rounded-lg border border-line">
+          <img src={imageUrl[index]} alt={dishName} className="rounded-circle" />
         <p className="w-40 my-2">{dishName}</p>
-        <aside className="flex justify-between items-center w-36 px-2 text-lighter-text my-1">
-          <small>${price}</small>
+        <aside className="flex justify-between items-center w-36 px-2 text-lighter-text w-[127px] h-[45px] my-1">
+          <small>$ {dishPrice}</small>
           <hr className="border-2 border-lighter-text rounded-lg" />
-          <small>{availability}</small>
+          <small>{availability} Bowls</small>
         </aside>
-        <button className="w-full bg-[#ea736d5e] text-bg-icons h-[52px] mt-1 rounded-b-lg">
-          Edit dish
-        </button>
-        </div> : ""}
+
+
+        <footer className="flex rounded-b-lg w-4/4">
+            <button className="w-full bg-[#ea736d5e] text-bg-icons flex justify-center items-center">
+              <img src={editIcon} className="mr-2" />
+              <p>Edit dish</p>
+            </button>
+            <button className="w-full bg-[#ea736d5e] text-bg-icons flex justify-center items-center">
+              <img src={deleteIcon} className="mr-2" />
+              <p>Delete dish</p>
+            </button>
+        </footer>
+        </div>
         
       </div>
     );
