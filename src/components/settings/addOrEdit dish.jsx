@@ -9,12 +9,12 @@ export default function AddOrEditDish() {
   const { newItem, retrieved, imageUrl, toggleBoxToCreateNewItem, onBar } = useContext(AppContext);
 
   const dish = retrieved.map((item, index) => {
-    const { dishName, id, dishPrice, availability, category } = item.data;
+    const { dishName, dishPrice, availability, category } = item.data;
     return (
       <div
         key={index}    >
        <div className=" w-[221px] h-[299px] m-2 pt-5 flex justify-center items-center flex-col text-center bg-sidebar rounded-lg border border-line">
-          <img src={imageUrl[index]} alt={dishName} className="rounded-circle" />
+          <img src={imageUrl[index].url} alt={dishName} className="rounded-circle" />
         <p className="w-40 my-2">{dishName}</p>
         <aside className="flex justify-between items-center w-36 px-2 text-lighter-text w-[127px] h-[45px] my-1">
           <small>$ {dishPrice}</small>
@@ -23,16 +23,16 @@ export default function AddOrEditDish() {
         </aside>
 
 
-        <footer className="flex rounded-b-lg w-4/4">
-            <button className="w-full bg-[#ea736d5e] text-bg-icons flex justify-center items-center">
+        <aside className="flex rounded-b-lg w-[221px] h-[72px]">
+            <button className="w-full mr-2 bg-[#ea736d5e] text-bg-icons flex justify-center rounded-bl-lg items-center">
               <img src={editIcon} className="mr-2" />
               <p>Edit dish</p>
             </button>
-            <button className="w-full bg-[#ea736d5e] text-bg-icons flex justify-center items-center">
+            <button className="w-full l-2 bg-[#ea736d5e] text-bg-icons flex justify-center items-center rounded-br-lg ">
               <img src={deleteIcon} className="mr-2" />
               <p>Delete dish</p>
             </button>
-        </footer>
+        </aside>
         </div>
         
       </div>

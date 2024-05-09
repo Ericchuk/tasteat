@@ -1,4 +1,5 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
+import {toast} from "react-toastify"
 import noodles from "./assets/landing page image/image 4 (3).png";
 import pasta from "./assets/landing page image/image 4.png";
 import dumpling from "./assets/landing page image/image 4 (1).png";
@@ -30,8 +31,6 @@ import {
 } from "firebase/auth";
 import { getDatabase, ref, push, onValue, set } from "firebase/database";
 import { getStorage, ref as sRef, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
-import {v4} from 'uuid'
-import { toast } from "react-toastify";
 
 const AppContext = React.createContext();
 
@@ -461,15 +460,17 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     {
-      location.pathname === "/dashboard" ||
-      location.pathname === "/setting" ||
-      location.pathname === "/order"  ||
-      location.pathname === "/customer" ||
-      location.pathname === "/notification"
+      window.location.pathname === "/dashboard" ||
+      window.location.pathname === "/setting" ||
+      window.location.pathname === "/order"  ||
+      window.location.pathname === "/customer" ||
+      window.location.pathname === "/notification" ||
+      window.location.pathname === "/logOut"
         ? setRemoveCart(true)
         : setRemoveCart(false);
     }
-    
+
+  
     { 
       screen.width < 1200 ? setWindowSize(false) : setWindowSize(true);
     }
@@ -484,10 +485,12 @@ const AppProvider = ({ children }) => {
       setInCart(true);
       console.log(orderItems.some((cart) => cart.id === item.id));
     }
+    toast("Added to cart")
   }
 
   function removeFromCart(itemId) {
     setOrderItems(orderItems.filter((item) => item.id !== itemId));
+    toast("Removed from cart")
   }
 
   // cart buttons function
@@ -495,6 +498,7 @@ const AppProvider = ({ children }) => {
     setOpenCart(!openCart);
     setProceed(false);
   }
+
 
   function showPayment() {
     {
@@ -527,7 +531,6 @@ const AppProvider = ({ children }) => {
         : setRemoveCart(false);
     }
 
-    {console.log(removeCart)}
   }
 
   function scrollFunc() {
@@ -551,7 +554,7 @@ const AppProvider = ({ children }) => {
       .then(() => {
         // Sign-out successful.
         setAuthenticated(false);
-        console.log("eee");
+        toast("Logged out")
       })
       .catch((error) => {
         // An error happened.
@@ -603,12 +606,10 @@ const AppProvider = ({ children }) => {
       });
   }, []);
 
-  // let [ids, setId] = useState(0);
   // function to push item to  database
   const initialValues = {
     dishName: "",
     dishPrice: 0,
-    // imageToStorage: imageToStorage,
     dishCategory: onBar,
     discountAmount: 0,
     dishRange: filterByPrice,
@@ -635,7 +636,6 @@ const AppProvider = ({ children }) => {
 
   function handleImageUpload(e) {
     setImageToStorage(e.target.files[0]);
-    // console.log("weewe");
   }
 
   //fetching the image and datas
@@ -660,11 +660,11 @@ const AppProvider = ({ children }) => {
       && imageToStorage !== null
     ) {
       //image function
-      const imgRef = sRef(storage, `files/${v4()}`)
+      const imgRef = sRef(storage, `files/${dishName}`)
      uploadBytes(imgRef, imageToStorage).then(value => {
       getDownloadURL(value.ref).then(url => {
-        // let key = val.name
-        setImageUrl(data => [url, ...data])
+        let key = val.name
+        setImageUrl(data => [{key,url}, ...data])
       })
      })
 
@@ -676,17 +676,24 @@ const AppProvider = ({ children }) => {
         dishCategory: dishCategory,
         dishRange: dishRange,
       });
+      toast("Added to database")
     } else {
       // setNewItem(false)
       console.log("error");
+      toast("Enter the appropriate values")
     }
+
+    setDishDetails(initialValues)
+    setImageToStorage("")
   }
+
 
   useEffect(() => {
     listAll(sRef(storage,`files`)).then(imageToStorage => {
       imageToStorage.items.forEach(val =>{
           getDownloadURL(val).then(url => {
-            setImageUrl(data => [...data, url])
+            let key = val.name 
+            setImageUrl(data => [...data, {key,url}])
           })
        })
       })
@@ -702,12 +709,6 @@ const AppProvider = ({ children }) => {
         setRetrieved(records)
       })
   },[])
-
-  // {console.log(retrieved[0]?.data)}
-  // {console.log(imageUrl)}
-  // {retrieved.map((item, index) => {
-  //   console.log(imageUrl[index])
-  // })}
 
   
   useLayoutEffect(() => {
