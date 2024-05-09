@@ -641,7 +641,7 @@ const AppProvider = ({ children }) => {
   //fetching the image and datas
 
   
-  const reference = ref(db, `subDishesData`);
+  const reference1 = ref(db, `subDishesData`);
 
   function submit(e) {
     e.preventDefault();
@@ -663,12 +663,12 @@ const AppProvider = ({ children }) => {
       const imgRef = sRef(storage, `files/${dishName}`)
      uploadBytes(imgRef, imageToStorage).then(value => {
       getDownloadURL(value.ref).then(url => {
-        let key = val.name
+        let key = value.name
         setImageUrl(data => [{key,url}, ...data])
       })
      })
 
-      push(reference, {
+      push(reference1, {
         dishName: dishName,
         dishPrice: dishPrice,
         availability: iAvailable,
@@ -684,8 +684,9 @@ const AppProvider = ({ children }) => {
     }
 
     setDishDetails(initialValues)
-    setImageToStorage("")
+    setImageToStorage(" ")
   }
+
 
 
   useEffect(() => {
@@ -709,6 +710,16 @@ const AppProvider = ({ children }) => {
         setRetrieved(records)
       })
   },[])
+
+  // push items from subdishes to main dish
+const reference2 = ref(db, `mainDishesToOrderFrom`)
+  function pushToOrderBoard(){
+    push(reference2,
+      retrieved
+    )
+    console.log("ee")
+
+  }
 
   
   useLayoutEffect(() => {
@@ -803,7 +814,8 @@ const AppProvider = ({ children }) => {
         deliveryAddFunc,
         deliveryNoteFunc,
         retrieved,
-        imageUrl
+        imageUrl,
+        pushToOrderBoard
       }}
     >
       {children}
