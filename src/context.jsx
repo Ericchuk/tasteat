@@ -696,6 +696,13 @@ const AppProvider = ({ children }) => {
     setImageToStorage(" ");
   }
 
+  // delete the items in sublist when the discard button is clicked
+
+  function discardItems(){
+    console.log("mmm")
+    setRetrieved([])
+  }
+
   useEffect(() => {
     listAll(sRef(storage, `files`)).then((imageToStorage) => {
       imageToStorage.items.forEach((val) => {
@@ -734,8 +741,7 @@ const AppProvider = ({ children }) => {
   // push items from subdishes to main dish
   const reference2 = ref(db, `mainDishesToOrderFrom`);
   function pushToOrderBoard() {
-    push(reference2, retrieved);
-
+    set(reference2, retrieved);
   }
 
   // creating a list of emails and storing in the database
@@ -842,6 +848,7 @@ const AppProvider = ({ children }) => {
         retrieved,
         imageUrl,
         pushToOrderBoard,
+        discardItems
       }}
     >
       {children}
