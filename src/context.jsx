@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify";
 import noodles from "./assets/landing page image/image 4 (3).png";
 import pasta from "./assets/landing page image/image 4.png";
 import dumpling from "./assets/landing page image/image 4 (1).png";
@@ -30,7 +30,13 @@ import {
   signOut,
 } from "firebase/auth";
 import { getDatabase, ref, push, onValue, set } from "firebase/database";
-import { getStorage, ref as sRef, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import {
+  getStorage,
+  ref as sRef,
+  uploadBytes,
+  listAll,
+  getDownloadURL,
+} from "firebase/storage";
 
 const AppContext = React.createContext();
 
@@ -343,7 +349,8 @@ const AppProvider = ({ children }) => {
   const [deliveryNote, setDeliveryNote] = useState();
   const [orderQty, setOrderQty] = useState(1);
   const [imageUrl, setImageUrl] = useState([]);
-  const [retrieved, setRetrieved] = useState([])
+  const [retrieved, setRetrieved] = useState([]);
+  const [userMailAddresses, setUserMailAddress] = useState([]);
 
   // cart quantity
   function setQty(e, item) {
@@ -376,13 +383,13 @@ const AppProvider = ({ children }) => {
   const customerDetails = {
     cardName: cardName,
     cardNumber: cardNumber,
-    cvv:cvv,
-    deliveryAddress:deliveryAddress,
-    deliveryNote:deliveryNote,
-    expiryDate:expiryDate,
+    cvv: cvv,
+    deliveryAddress: deliveryAddress,
+    deliveryNote: deliveryNote,
+    expiryDate: expiryDate,
   };
 
-   function makePayment() {
+  function makePayment() {
     console.log(customerDetails);
   }
 
@@ -462,7 +469,7 @@ const AppProvider = ({ children }) => {
     {
       window.location.pathname === "/dashboard" ||
       window.location.pathname === "/setting" ||
-      window.location.pathname === "/order"  ||
+      window.location.pathname === "/order" ||
       window.location.pathname === "/customer" ||
       window.location.pathname === "/notification" ||
       window.location.pathname === "/logOut"
@@ -470,11 +477,10 @@ const AppProvider = ({ children }) => {
         : setRemoveCart(false);
     }
 
-  
-    { 
+    {
       screen.width < 1200 ? setWindowSize(false) : setWindowSize(true);
     }
-  },[removeCart]);
+  }, [removeCart]);
   //check if item is in cart already
 
   function addToCart(item) {
@@ -485,12 +491,12 @@ const AppProvider = ({ children }) => {
       setInCart(true);
       console.log(orderItems.some((cart) => cart.id === item.id));
     }
-    toast("Added to cart")
+    toast("Added to cart");
   }
 
   function removeFromCart(itemId) {
     setOrderItems(orderItems.filter((item) => item.id !== itemId));
-    toast("Removed from cart")
+    toast("Removed from cart");
   }
 
   // cart buttons function
@@ -498,7 +504,6 @@ const AppProvider = ({ children }) => {
     setOpenCart(!openCart);
     setProceed(false);
   }
-
 
   function showPayment() {
     {
@@ -530,7 +535,6 @@ const AppProvider = ({ children }) => {
         ? setRemoveCart(true)
         : setRemoveCart(false);
     }
-
   }
 
   function scrollFunc() {
@@ -554,7 +558,7 @@ const AppProvider = ({ children }) => {
       .then(() => {
         // Sign-out successful.
         setAuthenticated(false);
-        toast("Logged out")
+        toast("Logged out");
       })
       .catch((error) => {
         // An error happened.
@@ -565,7 +569,6 @@ const AppProvider = ({ children }) => {
   // firebase for signin in
   // configuration
 
-  
   // Your web app's Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyCeUWwfQTuU0e19mfj9Ry2jo_QJYXPqsq0",
@@ -574,9 +577,9 @@ const AppProvider = ({ children }) => {
     projectId: "restuarantdatabase-6be7d",
     storageBucket: "restuarantdatabase-6be7d.appspot.com",
     messagingSenderId: "570133232909",
-    appId: "1:570133232909:web:9873018ddbf3ca6108c444"
+    appId: "1:570133232909:web:9873018ddbf3ca6108c444",
   };
-  
+
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
 
@@ -586,17 +589,16 @@ const AppProvider = ({ children }) => {
   const storage = getStorage(app);
   const [imageToStorage, setImageToStorage] = useState("");
 
-
+  // let userEmailAddress
 
   useEffect(() => {
     getRedirectResult(auth)
       .then((result) => {
         if (result) {
           setAuthenticated(true);
-          setGmailOfUsers([...gmailOfUsers, usera]);
-          console.log("result");
         } else {
           console.log("user not signed in");
+          console.log(usera);
         }
       })
       .catch((error) => {
@@ -604,6 +606,15 @@ const AppProvider = ({ children }) => {
         console.log(error);
         setAuthenticated(false);
       });
+  }, [authenticated]);
+
+  useLayoutEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        const { displayName, email, photoURL } = user;
+        setUser(...usera, { displayName, email, photoURL });
+      }
+    });
   }, []);
 
   // function to push item to  database
@@ -640,7 +651,6 @@ const AppProvider = ({ children }) => {
 
   //fetching the image and datas
 
-  
   const reference1 = ref(db, `subDishesData`);
 
   function submit(e) {
@@ -656,17 +666,17 @@ const AppProvider = ({ children }) => {
       numericMatch.test(dishPrice) &&
       iAvailable !== "" &&
       iAvailable !== 0 &&
-      numericMatch.test(iAvailable)
-      && imageToStorage !== null
+      numericMatch.test(iAvailable) &&
+      imageToStorage !== null
     ) {
       //image function
-      const imgRef = sRef(storage, `files/${dishName}`)
-     uploadBytes(imgRef, imageToStorage).then(value => {
-      getDownloadURL(value.ref).then(url => {
-        let key = value.name
-        setImageUrl(data => [{key,url}, ...data])
-      })
-     })
+      const imgRef = sRef(storage, `files/${dishName}`);
+      uploadBytes(imgRef, imageToStorage).then((value) => {
+        getDownloadURL(value.ref).then((url) => {
+          let key = value.name;
+          setImageUrl((data) => [{ key, url }, ...data]);
+        });
+      });
 
       push(reference1, {
         dishName: dishName,
@@ -676,60 +686,76 @@ const AppProvider = ({ children }) => {
         dishCategory: dishCategory,
         dishRange: dishRange,
       });
-      toast("Added to database")
+      toast("Added to database");
     } else {
       // setNewItem(false)
-      console.log("error");
-      toast("Enter the appropriate values")
+      toast("Enter the appropriate values");
     }
 
-    setDishDetails(initialValues)
-    setImageToStorage(" ")
+    setDishDetails(initialValues);
+    setImageToStorage(" ");
   }
-
-
 
   useEffect(() => {
-    listAll(sRef(storage,`files`)).then(imageToStorage => {
-      imageToStorage.items.forEach(val =>{
-          getDownloadURL(val).then(url => {
-            let key = val.name 
-            setImageUrl(data => [...data, {key,url}])
-          })
-       })
-      })
+    listAll(sRef(storage, `files`)).then((imageToStorage) => {
+      imageToStorage.items.forEach((val) => {
+        getDownloadURL(val).then((url) => {
+          let key = val.name;
+          setImageUrl((data) => [...data, { key, url }]);
+        });
+      });
+    });
 
-      const detailRef = ref(db,`subDishesData`)
-      onValue(detailRef, (snapshot) => {
-        let records = [];
-        snapshot.forEach((childSnapshot) => {
-          const childKey = childSnapshot.key;
-          const childData = childSnapshot.val();
-          records.push({key:childKey, data:childData});
-        })
-        setRetrieved(records)
-      })
-  },[])
+    const detailRef = ref(db, `subDishesData`);
+    onValue(detailRef, (snapshot) => {
+      let records = [];
+      snapshot.forEach((childSnapshot) => {
+        const childKey = childSnapshot.key;
+        const childData = childSnapshot.val();
+        records.push({ key: childKey, data: childData });
+      });
+      setRetrieved(records);
+    });
+
+    // fetch email address to check if the user email is already in the database
+
+    const emailRef = ref(db, "userEmail");
+    onValue(emailRef, (snapshot) => {
+      let emailAddresses = [];
+      snapshot.forEach((childSnapshot) => {
+        const childKey = childSnapshot.key;
+        const childData = childSnapshot.val();
+        emailAddresses.push({ key: childKey, data: childData });
+      });
+      setUserMailAddress(emailAddresses);
+    });
+  }, []);
 
   // push items from subdishes to main dish
-const reference2 = ref(db, `mainDishesToOrderFrom`)
-  function pushToOrderBoard(){
-    push(reference2,
-      retrieved
-    )
-    console.log("ee")
+  const reference2 = ref(db, `mainDishesToOrderFrom`);
+  function pushToOrderBoard() {
+    push(reference2, retrieved);
 
   }
 
-  
-  useLayoutEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        const { displayName, email, photoURL } = user;
-        setUser(...usera, { displayName, email, photoURL });
+  // creating a list of emails and storing in the database
+  const reference3 = ref(db, "userEmail");
+  function pushToUserAddress() {
+    push(reference3, usera);
+  }
+
+  // automatically sending the item to the database upon entry
+
+  useEffect(() => {
+    userMailAddresses.map((item) => {
+      if (item.data.email === usera.email) {
+        return
+      } else {
+        pushToUserAddress();
       }
     });
-  }, []);
+  }, [authenticated]);
+
 
   return (
     <AppContext.Provider
@@ -815,7 +841,7 @@ const reference2 = ref(db, `mainDishesToOrderFrom`)
         deliveryNoteFunc,
         retrieved,
         imageUrl,
-        pushToOrderBoard
+        pushToOrderBoard,
       }}
     >
       {children}
