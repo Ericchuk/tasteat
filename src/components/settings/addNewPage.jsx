@@ -38,9 +38,9 @@ export default function AddNewPage() {
                         <select className="w-full my-1 px-3 py-1 bg-sidebar rounded-lg outline-none capitalize h-10 flex justify-center items-center" name="dishCategory" value={dishCategory} onChange={handleInputChange}>
                             <option value="Hot dishes">Hot dishes</option>
                             <option value="Cold dishes">Cold dishes</option>
-                            <option value="soup">soup</option>
-                            <option value="grill">grill</option>
-                            <option value="appetizer">appetizer</option>
+                            <option value="Soup">Soup</option>
+                            <option value="Grill">Grill</option>
+                            <option value="Appetizer">Appetizer</option>
                             <option value="Dessert">Dessert</option>
                         </select>
                     </label>

@@ -351,6 +351,7 @@ const AppProvider = ({ children }) => {
   const [imageUrl, setImageUrl] = useState([]);
   const [retrieved, setRetrieved] = useState([]);
   const [userMailAddresses, setUserMailAddress] = useState([]);
+  const [mainDishes, setMainDishes] = useState([])
 
   // cart quantity
   function setQty(e, item) {
@@ -699,7 +700,6 @@ const AppProvider = ({ children }) => {
   // delete the items in sublist when the discard button is clicked
 
   function discardItems(){
-    console.log("mmm")
     setRetrieved([])
   }
 
@@ -736,12 +736,25 @@ const AppProvider = ({ children }) => {
       });
       setUserMailAddress(emailAddresses);
     });
+
+    // fetch the items in the main database that will be sent to the main dashboard from the restaurant management dashboard
+    const clientRef = ref(db, `mainDishesToOrderFrom`);
+    onValue(clientRef, (snapshot) => {
+      let updateMainDishes = [];
+      snapshot.forEach((childSnapshot) => {
+        const childKey = childSnapshot.key;
+        const childData = childSnapshot.val();
+        updateMainDishes.push({ key: childKey, data: childData });
+      });
+      setMainDishes(updateMainDishes);
+    });
   }, []);
 
   // push items from subdishes to main dish
   const reference2 = ref(db, `mainDishesToOrderFrom`);
   function pushToOrderBoard() {
     set(reference2, retrieved);
+    setRetrieved([])
   }
 
   // creating a list of emails and storing in the database
@@ -848,7 +861,8 @@ const AppProvider = ({ children }) => {
         retrieved,
         imageUrl,
         pushToOrderBoard,
-        discardItems
+        discardItems,
+        mainDishes
       }}
     >
       {children}
