@@ -795,7 +795,6 @@ const AppProvider = ({ children }) => {
   // create aa database for items that have been ordered and payment confirmed for 
   const reference4 = ref(db, `orderDishes`);
    function makePayment() {
-    console.log(customerDetails); 
     push(reference4, {usera, orderItems, total})
   }
 
