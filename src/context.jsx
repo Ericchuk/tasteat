@@ -455,13 +455,13 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     let total = 0;
     orderItems.forEach((item) => {
-      total += item.price;
+      total += parseFloat(item?.data.data.dishPrice);
       setTotal(total);
     });
 
     let discount = 0;
     orderItems.forEach((item) => {
-      discount += item.discount;
+      discount += parseFloat(item?.data.data.discountAmount);
       setDiscountTotal(discount);
     });
   }, [orderItems]);
@@ -485,13 +485,14 @@ const AppProvider = ({ children }) => {
   //check if item is in cart already
 
   function addToCart(item) {
-    if (orderItems.some((cart) => cart.id === item.id)) {
-      setInCart(false);
-    } else {
-      setOrderItems([...orderItems, item]);
-      setInCart(true);
-      console.log(orderItems.some((cart) => cart.id === item.id));
-    }
+    // if (orderItems.some((cart) => cart.id === item.id)) {
+    //   setInCart(false);
+    // } else {
+    //   setOrderItems([...orderItems, item]);
+    //   setInCart(true);
+    //   console.log(orderItems.some((cart) => cart.id === item.id));
+    // }
+    setOrderItems([...orderItems, item]);
     toast("Added to cart");
   }
 
@@ -507,10 +508,14 @@ const AppProvider = ({ children }) => {
   }
 
   function showPayment() {
-    {
-      orderItems < 1 ? setProceed(false) : setProceed(true);
-    }
-
+    
+      {orderItems.length < 1 && authenticated == null || !authenticated  ? 
+        setProceed(false) 
+       : setProceed(true);
+      }
+      {
+        authenticated == null || !authenticated ? toast("Get authenticated") : ""
+      }
     setOpenCart(false);
   }
 

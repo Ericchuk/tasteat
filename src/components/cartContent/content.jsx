@@ -27,7 +27,7 @@ export default function CartContent() {
         </div>
         <Order />
         <CartFooter />
-        <CartFooterButton button1="Go back" button2="Continue to Payment" onClick1={closeCart} disbable={orderItems.length === 0} onClick2={showPayment} />
+        <CartFooterButton button1="Go back" button2="Continue to Payment" onClick1={closeCart} disbable={orderItems.length < 1} onClick2={showPayment} />
 
       </section>
       
