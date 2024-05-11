@@ -352,6 +352,7 @@ const AppProvider = ({ children }) => {
   const [retrieved, setRetrieved] = useState([]);
   const [userMailAddresses, setUserMailAddress] = useState([]);
   const [mainDishes, setMainDishes] = useState([])
+  const [orderFromDb, setOrderFromDb] = useState([])
 
   // cart quantity
   function setQty(e, item) {
@@ -390,10 +391,7 @@ const AppProvider = ({ children }) => {
     expiryDate: expiryDate,
   };
 
-  function makePayment() {
-    console.log(customerDetails);
-  }
-
+ 
   // location fetching function not fixed
   function getLocation() {
     //   useEffect(() => {
@@ -492,8 +490,10 @@ const AppProvider = ({ children }) => {
     //   setInCart(true);
     //   console.log(orderItems.some((cart) => cart.id === item.id));
     // }
-    setOrderItems([...orderItems, item]);
-    toast("Added to cart");
+    {
+        authenticated == null || !authenticated ? toast("Get authenticated, so we can keep track of items in cart") : setOrderItems([...orderItems, item])
+      }
+    
   }
 
   function removeFromCart(itemId) {
@@ -753,6 +753,18 @@ const AppProvider = ({ children }) => {
       });
       setMainDishes(updateMainDishes);
     });
+
+    // fetch client orders 
+    const orderRef = ref(db, `orderDishes`);
+    onValue(orderRef, (snapshot) => {
+      let updateOrders = [];
+      snapshot.forEach((childSnapshot) => {
+        const childKey = childSnapshot.key;
+        const childData = childSnapshot.val();
+        updateOrders.push({ key: childKey, data: childData });
+      });
+      setOrderFromDb(updateOrders);
+    });
   }, []);
 
   // push items from subdishes to main dish
@@ -780,6 +792,12 @@ const AppProvider = ({ children }) => {
     });
   }, [authenticated]);
 
+  // create aa database for items that have been ordered and payment confirmed for 
+  const reference4 = ref(db, `orderDishes`);
+   function makePayment() {
+    console.log(customerDetails); 
+    push(reference4, {usera, orderItems, total})
+  }
 
   return (
     <AppContext.Provider
@@ -867,7 +885,8 @@ const AppProvider = ({ children }) => {
         imageUrl,
         pushToOrderBoard,
         discardItems,
-        mainDishes
+        mainDishes,
+        orderFromDb,
       }}
     >
       {children}
