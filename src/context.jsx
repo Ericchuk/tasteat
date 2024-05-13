@@ -29,13 +29,14 @@ import {
   getRedirectResult,
   signOut,
 } from "firebase/auth";
-import { getDatabase, ref, push, onValue, set } from "firebase/database";
+import { getDatabase, ref, push, onValue, set, remove } from "firebase/database";
 import {
   getStorage,
   ref as sRef,
   uploadBytes,
   listAll,
   getDownloadURL,
+  deleteObject
 } from "firebase/storage";
 
 const AppContext = React.createContext();
@@ -490,17 +491,15 @@ const AppProvider = ({ children }) => {
     //   setInCart(true);
     //   console.log(orderItems.some((cart) => cart.id === item.id));
     // }
-    // {
-    //     // authenticated == null || !authenticated ? toast("Get authenticated, so we can keep track of items in cart") : 
-    //   // }
-      setOrderItems([...orderItems, item])
+    {
+        authenticated == null || !authenticated ? toast("Get authenticated, so we can keep track of items in cart") : setOrderItems([...orderItems, item])
+      }
     
   }
 
   function removeFromCart(itemId) {
-    (setOrderItems(orderItems.filter((item) => item.index !== itemId)));
-    console.log(orderItems)
-    // toast("Removed from cart");
+    setOrderItems(orderItems.filter((item) => item.id !== itemId));
+    toast("Removed from cart");
   }
 
   // cart buttons function
@@ -735,14 +734,15 @@ const AppProvider = ({ children }) => {
 
     const emailRef = ref(db, "userEmail");
     onValue(emailRef, (snapshot) => {
-      let emailAddresses = [];
+      let emailAddress = [];
       snapshot.forEach((childSnapshot) => {
         const childKey = childSnapshot.key;
         const childData = childSnapshot.val();
-        emailAddresses.push({ key: childKey, data: childData });
+        emailAddress.push({ key: childKey, data: childData });
       });
-      setUserMailAddress(emailAddresses);
+      setUserMailAddress(emailAddress);
     });
+
 
     // fetch the items in the main database that will be sent to the main dashboard from the restaurant management dashboard
     const clientRef = ref(db, `mainDishesToOrderFrom`);
@@ -769,6 +769,19 @@ const AppProvider = ({ children }) => {
     });
   }, []);
 
+
+  // delete item from subDishes in database 
+
+
+  function deleteItemFromSubDishes(key) {
+    // deleteItem(deleteFromSubDishes, key);
+    const deleteFromSubDishes = ref(db, 'subDishesData/'+ key)
+    console.log(deleteFromSubDishes)
+    // const deleteImage = ref(storage, `` )
+    remove(deleteFromSubDishes)
+    // deleteObject(deleteImage)
+  }
+
   // push items from subdishes to main dish
   const reference2 = ref(db, `mainDishesToOrderFrom`);
   function pushToOrderBoard() {
@@ -793,6 +806,8 @@ const AppProvider = ({ children }) => {
       }
     });
   }, [authenticated]);
+
+ 
 
   // create aa database for items that have been ordered and payment confirmed for 
   const reference4 = ref(db, `orderDishes`);
@@ -888,6 +903,8 @@ const AppProvider = ({ children }) => {
         discardItems,
         mainDishes,
         orderFromDb,
+        userMailAddresses,
+        deleteItemFromSubDishes
       }}
     >
       {children}

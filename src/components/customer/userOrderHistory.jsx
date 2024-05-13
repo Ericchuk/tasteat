@@ -14,7 +14,7 @@ export default function UserOrderHistory(){
     return(
         <section className="mx-1 rounded-lg bg-sidebar py-6">
             <div className="">
-<NotificationHead headText={displayName} option1="Filter Order" option2="Pending" option3="disbursted" />
+<NotificationHead headText={`${displayName}'s orders`} option1="Filter Order" option2="Pending" option3="disbursted" />
             </div>
             
             <NotificationStatHeader />

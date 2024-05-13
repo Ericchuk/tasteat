@@ -6,10 +6,11 @@ import editIcon from '../../assets/landing page image/Vector.png'
 import deleteIcon from '../../assets/sidebar icons/bin.svg'
 
 export default function AddOrEditDish() {
-  const { newItem, retrieved, imageUrl, toggleBoxToCreateNewItem, onBar } = useContext(AppContext);
+  const { newItem, retrieved, imageUrl, toggleBoxToCreateNewItem, onBar, deleteItemFromSubDishes } = useContext(AppContext);
 
   const dish = retrieved.map((item, index) => {
     const { dishName, dishPrice, availability, category } = item.data;
+    const {key} = item
     return (
       <div
         key={index}    >
@@ -28,7 +29,7 @@ export default function AddOrEditDish() {
               <img src={editIcon} className="mr-2" />
               <p>Edit dish</p>
             </button>
-            <button className="w-full l-2 bg-[#ea736d5e] text-bg-icons flex justify-center items-center rounded-br-lg ">
+            <button className="w-full l-2 bg-[#ea736d5e] text-bg-icons flex justify-center items-center rounded-br-lg " onClick={() => deleteItemFromSubDishes(key)}>
               <img src={deleteIcon} className="mr-2" />
               <p>Delete dish</p>
             </button>
