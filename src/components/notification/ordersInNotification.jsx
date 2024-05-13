@@ -3,7 +3,7 @@ import { AppContext } from "../../context";
 
 export default function OrderInNotification() {
   const { notificationOrder,removeCart, notificationFilter, orderFromDb } = useContext(AppContext); 
-  console.log(orderFromDb[0].data.total)
+  // console.log(orderFromDb[0].data.total)
   const list = orderFromDb.map((item, index) => {
     const {displayName, 
       photoURL} = item?.data?.usera

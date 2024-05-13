@@ -3,10 +3,10 @@ import { useContext } from 'react';
 import { AppContext } from '../../context';
 
 export default function NotificationHead({headText,option1,option2,option3}){
-    const { removeCart, filterNotification, notificationFilter } = useContext(AppContext)
+    const { removeCart, filterNotification, notificationFilter, authenticated } = useContext(AppContext)
     return(
         <section className="flex justify-between items-center px-5">
-            <h3 className="font-bold text-xl text-white capitalize">{headText}</h3>
+            <h3 className="font-bold text-xl text-white capitalize">{headText}{authenticated ? "'s order" : ""}</h3>
             <label className="relative flex justify-start items-center">
                 <img src={filter} alt="filter" className="absolute left-3" />
                 <select className={`border border-line bg-sidebar text-white ${removeCart ? 'w-48' : " w-36"}  h-11 justify-start items-center appearance-none pl-10 px-3.5 rounded-lg`} 

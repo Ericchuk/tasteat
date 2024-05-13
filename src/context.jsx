@@ -490,15 +490,17 @@ const AppProvider = ({ children }) => {
     //   setInCart(true);
     //   console.log(orderItems.some((cart) => cart.id === item.id));
     // }
-    {
-        authenticated == null || !authenticated ? toast("Get authenticated, so we can keep track of items in cart") : setOrderItems([...orderItems, item])
-      }
+    // {
+    //     // authenticated == null || !authenticated ? toast("Get authenticated, so we can keep track of items in cart") : 
+    //   // }
+      setOrderItems([...orderItems, item])
     
   }
 
   function removeFromCart(itemId) {
-    setOrderItems(orderItems.filter((item) => item.id !== itemId));
-    toast("Removed from cart");
+    (setOrderItems(orderItems.filter((item) => item.index !== itemId)));
+    console.log(orderItems)
+    // toast("Removed from cart");
   }
 
   // cart buttons function
