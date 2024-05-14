@@ -7,18 +7,17 @@ export default function Order() {
 
   const orderItem = orderItems.map((item, index) => {
     const {
-      dishImage,
       dishName,
       discount,
       dishPrice,
       availability,
-      dishCategory } = item.data?.data;
+      dishCategory } = item?.data;
     const total = orderQty * dishPrice 
     return (
       <aside key={index} className="flex justify-between items-center my-4">
         <div className="w-[85%]">
           <aside className="flex justify-between items-center w-11/12 mb-2">
-            <img src={imageUrl[item?.key]?.url} alt={dishName} className="w-12 rounded-circle mr-2"/>
+            <img src={imageUrl[index]?.url} alt={dishName} className="w-12 rounded-circle mr-2"/>
             <span className="w-8/12 block">
               <p className="w-11/12 truncate font-medium">{dishName}</p>
               <small className="text-lighter-text">${dishPrice}</small>

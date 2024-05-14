@@ -14,7 +14,7 @@ import setting from '../assets/sidebar icons/setting.svg'
 import logOut from '../assets/sidebar icons/log out.svg'
 
 export default function Sidebar(){
-     const {sidebarIcons,setSidebarIcons,change} = useContext(AppContext);
+     const {sidebarIcons,setSidebarIcons,change, checkIt} = useContext(AppContext);
 
     useEffect(() => {
         setSidebarIcons(location.pathname)
@@ -68,7 +68,7 @@ export default function Sidebar(){
 
     const navItem = navItems.map((item) => {
         return(
-            <li key={item.id} className={`w-icons h-icons flex justify-center items-center ml-3 ${sidebarIcons === item.itemName ? 'bg-bg-color transition-colors': " "}`} onClick={()=> change(item)}>
+            <li key={item.id} className={`w-icons h-icons flex justify-center items-center ml-3 ${sidebarIcons === item.itemName ? 'bg-bg-color transition-colors': " "}`} onClick={checkIt()}>
                 <NavLink to={item.itemName} className={`home h-icon w-icon rounded-lg flex flex-col justify-center items-center ${location.pathname === item.itemName ? 'rounded-lg bg-bg-icons transition-opacity drop-shadow-3xl' : " "} `} style={({ isActive }) =>
             isActive ? { backgroundColor: "rgb(234 115 109)", } : { backgroundColor: "transparent" }
           }>

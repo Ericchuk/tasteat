@@ -354,6 +354,7 @@ const AppProvider = ({ children }) => {
   const [userMailAddresses, setUserMailAddress] = useState([]);
   const [mainDishes, setMainDishes] = useState([])
   const [orderFromDb, setOrderFromDb] = useState([])
+  const [withImage, setWithImage] = useState([])
 
   // cart quantity
   function setQty(e, item) {
@@ -714,7 +715,7 @@ const AppProvider = ({ children }) => {
       imageToStorage.items.forEach((val) => {
         getDownloadURL(val).then((url) => {
           let key = val.name;
-          setImageUrl((data) => [...data, { key, url }]);
+          setImageUrl((data) => [...data, { [key]: url }]);
         });
       });
     });
@@ -769,6 +770,16 @@ const AppProvider = ({ children }) => {
     });
   }, []);
 
+  // append items from imageUrl and retrieved in to withImage
+useEffect(() => {
+  // const merge = () => {
+    // mergedImagesAndDishes = retrieved.map((item, index) =({...item,dishImage}))
+    // setMergedImagesAndDishes(mergedImagesAndDishes)
+    
+  // }
+  // merge()
+}, [])
+  
 
   // delete item from subDishes in database 
 
@@ -811,8 +822,15 @@ const AppProvider = ({ children }) => {
 
   // create aa database for items that have been ordered and payment confirmed for 
   const reference4 = ref(db, `orderDishes`);
+  let orderNumber = 1000
    function makePayment() {
-    push(reference4, {usera, orderItems, total})
+    orderNumber++
+    push(reference4, {usera, orderItems, total, order})
+  }
+
+  function checkIt(){
+    // setWithImage(retrieved.map((item, index) => ({...item.data, dishImage: imageUrl[index]?.url })))
+    // console.log(withImage)
   }
 
   return (
@@ -904,7 +922,10 @@ const AppProvider = ({ children }) => {
         mainDishes,
         orderFromDb,
         userMailAddresses,
-        deleteItemFromSubDishes
+        deleteItemFromSubDishes,
+        setWithImage,
+        withImage,
+        checkIt
       }}
     >
       {children}
