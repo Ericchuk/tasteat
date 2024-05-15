@@ -7,7 +7,6 @@ import deleteIcon from '../../assets/sidebar icons/bin.svg'
 
 export default function AddOrEditDish() {
   const { newItem, retrieved, imageUrl, toggleBoxToCreateNewItem, onBar, deleteItemFromSubDishes,withImage, editItemInSubdish } = useContext(AppContext);
-  console.log(withImage)
 
   const dish = withImage.map((data, index) => {
     const {

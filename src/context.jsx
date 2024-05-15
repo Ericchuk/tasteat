@@ -45,6 +45,7 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
+import { useNavigate } from "react-router-dom";
 
 const AppContext = React.createContext();
 
@@ -460,6 +461,8 @@ const AppProvider = ({ children }) => {
   // get the total amount of item purchased
   useEffect(() => {
     let total = 0;
+    let totalled;
+    let discounted
     orderItems.forEach((data) => {
       total += parseFloat(data?.item?.data?.dishPrice);
       setTotal(total);
@@ -468,7 +471,8 @@ const AppProvider = ({ children }) => {
     let discount = 0;
     orderItems.forEach((data) => {
       discount += parseFloat(data?.item?.data?.discountAmount);
-      setDiscountTotal(discount);
+      discounted = discount/ 100
+      setDiscountTotal(discounted);
     });
   }, [orderItems]);
 
@@ -498,10 +502,12 @@ const AppProvider = ({ children }) => {
     //   setInCart(true);
     //   console.log(orderItems.some((cart) => cart.id === item.id));
     // }
-    {
-      authenticated == null || !authenticated
-        ? toast("Get authenticated, so we can keep track of items in cart")
-        : setOrderItems([...orderItems, item]);
+    if(authenticated == null || !authenticated){
+      toast("Get authenticated, so we can keep track of items in cart")
+      window.location.pathname ='/customer'
+    }else{
+      setOrderItems([...orderItems, item])
+      toast("Added")
     }
   }
 
@@ -517,13 +523,11 @@ const AppProvider = ({ children }) => {
   }
 
   function showPayment() {
-    {
-      (orderItems.length < 1 && authenticated == null) || !authenticated
-        ? setProceed(false)
-        : setProceed(true);
-    }
-    {
-      authenticated == null || !authenticated ? toast("Get authenticated") : "";
+    if(orderItems.length < 1 && authenticated == null && !authenticated){
+      setProceed(false)
+      toast("No item in cart")
+    }else{
+      setProceed(true)
     }
     setOpenCart(false);
   }
@@ -613,7 +617,6 @@ const AppProvider = ({ children }) => {
           setAuthenticated(true);
         } else {
           console.log("user not signed in");
-          console.log(usera);
         }
       })
       .catch((error) => {
@@ -793,7 +796,6 @@ const AppProvider = ({ children }) => {
   // delete item from subDishes in database
 
   function deleteItemFromSubDishes(key, url, imageKey) {
-    // deleteItem(deleteFromSubDishes, key);
     const deleteFromSubDishes = ref(db, "subDishesData/" + key);
     const deleteImage = sRef(storage, url);
     remove(deleteFromSubDishes);
@@ -805,13 +807,11 @@ const AppProvider = ({ children }) => {
       .catch((error) => {
         console.log(error);
       });
-    console.log(deleteFromSubDishes, deleteImage);
-    window.location.reload();
   }
 
 
   function editItemInSubdish(item){
-    console.log(item)
+    toast("Still in the works")
   }
   // push items from subdishes to main dish
   const reference2 = ref(db, `mainDishesToOrderFrom`);
@@ -840,10 +840,14 @@ const AppProvider = ({ children }) => {
 
   // create aa database for items that have been ordered and payment confirmed for
   const reference4 = ref(db, `orderDishes`);
-  let orderNumber = 1000;
   function makePayment() {
-    orderNumber++;
-    push(reference4, { usera, orderItems, total, order });
+    if(orderItems.length > 0 && !deliveryAddress == ""){
+      push(reference4, { usera, orderItems, total });
+      toast("Payment gone through")
+    }else{
+      toast("Please input delivery address")
+    }
+    
   }
 
   return (
