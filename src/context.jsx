@@ -29,14 +29,21 @@ import {
   getRedirectResult,
   signOut,
 } from "firebase/auth";
-import { getDatabase, ref, push, onValue, set, remove } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  push,
+  onValue,
+  set,
+  remove,
+} from "firebase/database";
 import {
   getStorage,
   ref as sRef,
   uploadBytes,
   listAll,
   getDownloadURL,
-  deleteObject
+  deleteObject,
 } from "firebase/storage";
 
 const AppContext = React.createContext();
@@ -352,9 +359,9 @@ const AppProvider = ({ children }) => {
   const [imageUrl, setImageUrl] = useState([]);
   const [retrieved, setRetrieved] = useState([]);
   const [userMailAddresses, setUserMailAddress] = useState([]);
-  const [mainDishes, setMainDishes] = useState([])
-  const [orderFromDb, setOrderFromDb] = useState([])
-  const [withImage, setWithImage] = useState([])
+  const [mainDishes, setMainDishes] = useState([]);
+  const [orderFromDb, setOrderFromDb] = useState([]);
+  const [withImage, setWithImage] = useState([]);
 
   // cart quantity
   function setQty(e, item) {
@@ -393,7 +400,6 @@ const AppProvider = ({ children }) => {
     expiryDate: expiryDate,
   };
 
- 
   // location fetching function not fixed
   function getLocation() {
     //   useEffect(() => {
@@ -454,14 +460,14 @@ const AppProvider = ({ children }) => {
   // get the total amount of item purchased
   useEffect(() => {
     let total = 0;
-    orderItems.forEach((item) => {
-      total += parseFloat(item?.data.data.dishPrice);
+    orderItems.forEach((data) => {
+      total += parseFloat(data?.item?.data?.dishPrice);
       setTotal(total);
     });
 
     let discount = 0;
-    orderItems.forEach((item) => {
-      discount += parseFloat(item?.data.data.discountAmount);
+    orderItems.forEach((data) => {
+      discount += parseFloat(data?.item?.data?.discountAmount);
       setDiscountTotal(discount);
     });
   }, [orderItems]);
@@ -493,13 +499,14 @@ const AppProvider = ({ children }) => {
     //   console.log(orderItems.some((cart) => cart.id === item.id));
     // }
     {
-        authenticated == null || !authenticated ? toast("Get authenticated, so we can keep track of items in cart") : setOrderItems([...orderItems, item])
-      }
-    
+      authenticated == null || !authenticated
+        ? toast("Get authenticated, so we can keep track of items in cart")
+        : setOrderItems([...orderItems, item]);
+    }
   }
 
-  function removeFromCart(itemId) {
-    setOrderItems(orderItems.filter((item) => item.id !== itemId));
+  function removeFromCart(indexToDelete) {
+    setOrderItems(orderItems.filter((item, index) => index !== indexToDelete));
     toast("Removed from cart");
   }
 
@@ -510,14 +517,14 @@ const AppProvider = ({ children }) => {
   }
 
   function showPayment() {
-    
-      {orderItems.length < 1 && authenticated == null || !authenticated  ? 
-        setProceed(false) 
-       : setProceed(true);
-      }
-      {
-        authenticated == null || !authenticated ? toast("Get authenticated") : ""
-      }
+    {
+      (orderItems.length < 1 && authenticated == null) || !authenticated
+        ? setProceed(false)
+        : setProceed(true);
+    }
+    {
+      authenticated == null || !authenticated ? toast("Get authenticated") : "";
+    }
     setOpenCart(false);
   }
 
@@ -706,16 +713,16 @@ const AppProvider = ({ children }) => {
 
   // delete the items in sublist when the discard button is clicked
 
-  function discardItems(){
-    setRetrieved([])
+  function discardItems() {
+    setRetrieved([]);
   }
 
   useEffect(() => {
     listAll(sRef(storage, `files`)).then((imageToStorage) => {
       imageToStorage.items.forEach((val) => {
         getDownloadURL(val).then((url) => {
-          let key = val.name;
-          setImageUrl((data) => [...data, { key, url }]);
+          let imageKey = val.name;
+          setImageUrl((data) => [...data, { imageKey, url }]);
         });
       });
     });
@@ -744,7 +751,6 @@ const AppProvider = ({ children }) => {
       setUserMailAddress(emailAddress);
     });
 
-
     // fetch the items in the main database that will be sent to the main dashboard from the restaurant management dashboard
     const clientRef = ref(db, `mainDishesToOrderFrom`);
     onValue(clientRef, (snapshot) => {
@@ -757,7 +763,7 @@ const AppProvider = ({ children }) => {
       setMainDishes(updateMainDishes);
     });
 
-    // fetch client orders 
+    // fetch client orders
     const orderRef = ref(db, `orderDishes`);
     onValue(orderRef, (snapshot) => {
       let updateOrders = [];
@@ -771,39 +777,47 @@ const AppProvider = ({ children }) => {
   }, []);
 
   // append items from imageUrl and retrieved in to withImage
-useEffect(() => {
+  useEffect(() => {
     retrieved.map((item) => {
       imageUrl.map((item2) => {
-        if(item?.data?.dishName === item2.key){
-          console.log(item2.key, item?.data?.dishName)
-          setWithImage((data) => [...data, { item, item2 }])
-          console.log(withImage)
-        }else if(withImage.length < imageUrl.length){
+        if (item?.data?.dishName === item2.imageKey) {
+          setWithImage((data) => [...data, { item, item2 }]);
+          console.log(withImage);
+        } else if (withImage.length < imageUrl.length) {
           // window.location.reload()
         }
-        
-      })
-    })
-}, [retrieved])
-  
+      });
+    });
+  }, [retrieved]);
 
-  // delete item from subDishes in database 
+  // delete item from subDishes in database
 
-
-  function deleteItemFromSubDishes(key) {
+  function deleteItemFromSubDishes(key, url, imageKey) {
     // deleteItem(deleteFromSubDishes, key);
-    const deleteFromSubDishes = ref(db, 'subDishesData/'+ key)
-    // const deleteImage = ref(storage, `` )
-    remove(deleteFromSubDishes)
-    console.log(deleteFromSubDishes)
-    // deleteObject(deleteImage)
+    const deleteFromSubDishes = ref(db, "subDishesData/" + key);
+    const deleteImage = sRef(storage, url);
+    remove(deleteFromSubDishes);
+    deleteObject(deleteImage)
+      .then(() => {
+        console.log("file deleted");
+        toast(`Deleted ${imageKey}`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log(deleteFromSubDishes, deleteImage);
+    window.location.reload();
   }
 
+
+  function editItemInSubdish(item){
+    console.log(item)
+  }
   // push items from subdishes to main dish
   const reference2 = ref(db, `mainDishesToOrderFrom`);
   function pushToOrderBoard() {
     set(reference2, retrieved);
-    setRetrieved([])
+    setRetrieved([]);
   }
 
   // creating a list of emails and storing in the database
@@ -817,26 +831,19 @@ useEffect(() => {
   useEffect(() => {
     userMailAddresses.map((item) => {
       if (item.data.email === usera.email) {
-        return
+        return;
       } else {
         pushToUserAddress();
       }
     });
   }, [authenticated]);
 
- 
-
-  // create aa database for items that have been ordered and payment confirmed for 
+  // create aa database for items that have been ordered and payment confirmed for
   const reference4 = ref(db, `orderDishes`);
-  let orderNumber = 1000
-   function makePayment() {
-    orderNumber++
-    push(reference4, {usera, orderItems, total, order})
-  }
-
-  function checkIt(){
-    // setWithImage(retrieved.map((item, index) => ({...item.data, dishImage: imageUrl[index]?.url })))
-    // console.log(withImage)
+  let orderNumber = 1000;
+  function makePayment() {
+    orderNumber++;
+    push(reference4, { usera, orderItems, total, order });
   }
 
   return (
@@ -931,7 +938,7 @@ useEffect(() => {
         deleteItemFromSubDishes,
         setWithImage,
         withImage,
-        checkIt
+        editItemInSubdish
       }}
     >
       {children}

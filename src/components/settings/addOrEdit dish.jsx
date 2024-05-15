@@ -6,16 +6,16 @@ import editIcon from '../../assets/landing page image/Vector.png'
 import deleteIcon from '../../assets/sidebar icons/bin.svg'
 
 export default function AddOrEditDish() {
-  const { newItem, retrieved, imageUrl, toggleBoxToCreateNewItem, onBar, deleteItemFromSubDishes,withImage } = useContext(AppContext);
+  const { newItem, retrieved, imageUrl, toggleBoxToCreateNewItem, onBar, deleteItemFromSubDishes,withImage, editItemInSubdish } = useContext(AppContext);
   console.log(withImage)
 
   const dish = withImage.map((data, index) => {
     const {
       dishName,
       dishPrice,
-      availability,
-      dishCategory } = data.item.data;
-      const {url,key} = data.item2
+      availability } = data.item.data;
+      const {key} = data.item
+      const {url, imageKey} = data.item2
     return (
       <div
         key={index}    >
@@ -30,11 +30,11 @@ export default function AddOrEditDish() {
 
 
         <aside className="flex rounded-b-lg w-[221px] h-[72px]">
-            <button className="w-full mr-2 bg-[#ea736d5e] text-bg-icons flex justify-center rounded-bl-lg items-center">
+            <button className="w-full mr-2 bg-[#ea736d5e] text-bg-icons flex justify-center rounded-bl-lg items-center" onClick={() => editItemInSubdish(data)}>
               <img src={editIcon} className="mr-2" />
               <p>Edit dish</p>
             </button>
-            <button className="w-full l-2 bg-[#ea736d5e] text-bg-icons flex justify-center items-center rounded-br-lg " onClick={() => deleteItemFromSubDishes(key)}>
+            <button className="w-full l-2 bg-[#ea736d5e] text-bg-icons flex justify-center items-center rounded-br-lg " onClick={() => deleteItemFromSubDishes(key, url, imageKey)}>
               <img src={deleteIcon} className="mr-2" />
               <p>Delete dish</p>
             </button>

@@ -5,19 +5,19 @@ import {AppContext} from '../../context'
 export default function Order() {
     const {orderItems, removeFromCart, orderQty, setQty, imageUrl} = useContext(AppContext)
 
-  const orderItem = orderItems.map((item, index) => {
+  const orderItem = orderItems.map((data, index) => {
     const {
       dishName,
       discount,
-      dishPrice,
-      availability,
-      dishCategory } = item?.data;
+      dishPrice } = data?.item?.data;
+    const {url, imageKey} = data.item2
     const total = orderQty * dishPrice 
+    console.log(orderItems)
     return (
       <aside key={index} className="flex justify-between items-center my-4">
         <div className="w-[85%]">
           <aside className="flex justify-between items-center w-11/12 mb-2">
-            <img src={imageUrl[index]?.url} alt={dishName} className="w-12 rounded-circle mr-2"/>
+            <img src={url} alt={dishName} className="w-12 rounded-circle mr-2"/>
             <span className="w-8/12 block">
               <p className="w-11/12 truncate font-medium">{dishName}</p>
               <small className="text-lighter-text">${dishPrice}</small>
@@ -34,7 +34,7 @@ export default function Order() {
         <aside className="flex justify-between items-center flex-col">
           <p className="font-medium pb-8">${total}</p>
 
-          <span className="flex justify-center items-center w-12 h-12 border border-bg-icons rounded-lg" onClick={() => removeFromCart(item.id)}>
+          <span className="flex justify-center items-center w-12 h-12 border border-bg-icons rounded-lg" onClick={() => removeFromCart(index)}>
             <img src={bin} alt="bin" />
           </span>
         </aside>
