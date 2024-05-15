@@ -715,7 +715,7 @@ const AppProvider = ({ children }) => {
       imageToStorage.items.forEach((val) => {
         getDownloadURL(val).then((url) => {
           let key = val.name;
-          setImageUrl((data) => [...data, { [key]: url }]);
+          setImageUrl((data) => [...data, { key, url }]);
         });
       });
     });
@@ -772,13 +772,19 @@ const AppProvider = ({ children }) => {
 
   // append items from imageUrl and retrieved in to withImage
 useEffect(() => {
-  // const merge = () => {
-    // mergedImagesAndDishes = retrieved.map((item, index) =({...item,dishImage}))
-    // setMergedImagesAndDishes(mergedImagesAndDishes)
-    
-  // }
-  // merge()
-}, [])
+    retrieved.map((item) => {
+      imageUrl.map((item2) => {
+        if(item?.data?.dishName === item2.key){
+          console.log(item2.key, item?.data?.dishName)
+          setWithImage((data) => [...data, { item, item2 }])
+          console.log(withImage)
+        }else if(withImage.length < imageUrl.length){
+          // window.location.reload()
+        }
+        
+      })
+    })
+}, [retrieved])
   
 
   // delete item from subDishes in database 
@@ -787,9 +793,9 @@ useEffect(() => {
   function deleteItemFromSubDishes(key) {
     // deleteItem(deleteFromSubDishes, key);
     const deleteFromSubDishes = ref(db, 'subDishesData/'+ key)
-    console.log(deleteFromSubDishes)
     // const deleteImage = ref(storage, `` )
     remove(deleteFromSubDishes)
+    console.log(deleteFromSubDishes)
     // deleteObject(deleteImage)
   }
 

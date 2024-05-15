@@ -6,17 +6,22 @@ import editIcon from '../../assets/landing page image/Vector.png'
 import deleteIcon from '../../assets/sidebar icons/bin.svg'
 
 export default function AddOrEditDish() {
-  const { newItem, retrieved, imageUrl, toggleBoxToCreateNewItem, onBar, deleteItemFromSubDishes } = useContext(AppContext);
+  const { newItem, retrieved, imageUrl, toggleBoxToCreateNewItem, onBar, deleteItemFromSubDishes,withImage } = useContext(AppContext);
+  console.log(withImage)
 
-  const dish = retrieved.map((item, index) => {
-    const { dishName, dishPrice, availability, category } = item.data;
-    const {key} = item
+  const dish = withImage.map((data, index) => {
+    const {
+      dishName,
+      dishPrice,
+      availability,
+      dishCategory } = data.item.data;
+      const {url,key} = data.item2
     return (
       <div
         key={index}    >
        <div className=" w-[221px] h-[299px] m-2 pt-5 flex justify-center items-center flex-col text-center bg-sidebar rounded-lg border border-line">
-          <img src={imageUrl[index]?.url} alt={dishName} className="rounded-circle" />
-        <p className="w-40 my-2">{imageUrl[index]?.key}</p>
+          <img src={url} alt={dishName} className="rounded-circle" />
+        <p className="w-40 my-2">{dishName}</p>
         <aside className="flex justify-between items-center w-36 px-2 text-lighter-text w-[127px] h-[45px] my-1">
           <small>$ {dishPrice}</small>
           <hr className="border-2 border-lighter-text rounded-lg" />
