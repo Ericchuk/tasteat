@@ -443,16 +443,13 @@ const AppProvider = ({ children }) => {
     setSearchText(e.target.value);
     let filteredItems = [];
     for (let i = 0; i < withImage.length; i++) {
-      const dishName = withImage[i]?.item?.data.dishName.toLowerCase();
+      const dishName = withImage[i].item.data.dishName.toLowerCase();
       if (dishName.includes(searchText)) {
-        filteredItems.push(withImage[i]);
+        (filteredItems.push(withImage[i]));
         setDisplay(true);
-      }else{
-        setDisplay(false);
-      } 
+      } else setDisplay(false);
     }
     setFIlteredItems(filteredItems);
-    console.log(filteredItems)
   }
 
   // filter notifications

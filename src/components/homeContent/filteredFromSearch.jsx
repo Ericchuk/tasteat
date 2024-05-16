@@ -3,15 +3,15 @@ import { AppContext } from "../../context";
 
 export default function Filtered() {
   const { filteredItems } = useContext(AppContext);
-  console.log(filteredItems)
   return (
     <section className="flex flex-wrap justify-start items-center py-14">
       {filteredItems.map((data,index) => {
-        const {
+         const {
           dishName,
           dishPrice,
-          availability } = data.item.data;
-          const {url} = data.item2;
+          availability,
+          dishCategory } = data.item.data;
+          const {url} = data.item2
         return (
           <section key={index}>
             
