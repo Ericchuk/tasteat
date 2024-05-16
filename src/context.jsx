@@ -442,14 +442,17 @@ const AppProvider = ({ children }) => {
   function searchItems(e) {
     setSearchText(e.target.value);
     let filteredItems = [];
-    for (let i = 0; i < dishes.length; i++) {
-      const dishName = dishes[i].dishName.toLowerCase();
+    for (let i = 0; i < withImage.length; i++) {
+      const dishName = withImage[i]?.item?.data.dishName.toLowerCase();
       if (dishName.includes(searchText)) {
-        filteredItems.push(dishes[i]);
+        filteredItems.push(withImage[i]);
         setDisplay(true);
-      } else setDisplay(false);
+      }else{
+        setDisplay(false);
+      } 
     }
     setFIlteredItems(filteredItems);
+    console.log(filteredItems)
   }
 
   // filter notifications

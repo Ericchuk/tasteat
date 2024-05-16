@@ -3,7 +3,7 @@ import {AppContext} from '../../context';
 
 
 export default function Dishes(){
-    const {dishes, addToCart, onBar, filterByPrice, withImage, imageUrl} = useContext(AppContext)
+    const {dishes, addToCart, onBar, filterByPrice, withImage, imageUrl,display, filteredItems} = useContext(AppContext)
 
 
     return(
