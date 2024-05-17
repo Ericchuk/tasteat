@@ -1,10 +1,5 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
 import { toast } from "react-toastify";
-import noodles from "./assets/landing page image/image 4 (3).png";
-import pasta from "./assets/landing page image/image 4.png";
-import dumpling from "./assets/landing page image/image 4 (1).png";
-import spinach from "./assets/landing page image/image 4 (2).png";
-import ugwu from "./assets/landing page image/Images.png";
 import instantNoodles from "./assets/landing page image/image 4(1).png";
 import eren from "./assets/landing page image/Avatar 1.svg";
 import reiner from "./assets/landing page image/Avatar 1(1).svg";
